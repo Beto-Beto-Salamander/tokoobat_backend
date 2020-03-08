@@ -1,0 +1,48 @@
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+class JenisHewanModel extends CI_Model 
+{ 
+    private $table = 'jenis_hewan'; 
+    public $id_jenis; 
+    public $jenis; 
+    public $jns_deleted_at;
+    public $rule = [ 
+        [ 
+            'field' => 'jenis', 
+            'label' => 'jenis', 
+            'rules' => 'required' 
+        ]
+    ]; 
+    public function Rules() { return $this->rule; } 
+    
+    public function store($request) { 
+        $this->jenis = $request->jenis;
+
+        if($this->db->insert($this->table, $this)){ 
+            return ['msg'=>'Success','error'=>false];
+        } 
+        return ['msg'=>'Failed','error'=>true]; 
+    } 
+    public function update($request,$id_jenis) { 
+        $updateData = [
+            'jenis' =>$request->jenis,
+        ]; 
+        if($this->db->where('id_jenis',$id_jenis)->update($this->table, $updateData)){ 
+            return ['msg'=>'Success','error'=>false]; 
+        } 
+        return ['msg'=>'Failed','error'=>true]; 
+    } 
+
+    public function destroy($id_jenis){ 
+        if (empty($this->db->select('*')->where(array('id_jenis' => $id_jenis))->get($this->table)->row())) 
+        return ['msg'=>'Id Not Found','error'=>true]; 
+        $deleteData = [
+            'jns_deleted_at' =>'2020-03-02'
+        ]; 
+        if($this->db->where('id_jenis',$id_jenis)->update($this->table, $deleteData)){ 
+            return ['msg'=>'Success','error'=>false]; 
+        } 
+        return ['msg'=>'Failed','error'=>true];
+    }     
+} 
+?>
