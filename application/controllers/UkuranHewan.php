@@ -60,7 +60,7 @@ Class UkuranHewan extends REST_Controller{
         } 
     } 
 
-    public function index_delete($id = null){ 
+    public function delete_post($id = null){ 
 
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 

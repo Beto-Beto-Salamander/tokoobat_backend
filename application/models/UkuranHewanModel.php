@@ -24,8 +24,11 @@ class UkuranHewanModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_ukuran) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'ukuran' =>$request->ukuran,
+            'ukrn_edited_at' =>$now
         ]; 
         if($this->db->where('id_ukuran',$id_ukuran)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -36,8 +39,10 @@ class UkuranHewanModel extends CI_Model
     public function destroy($id_ukuran){ 
         if (empty($this->db->select('*')->where(array('id_ukuran' => $id_ukuran))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'ukrn_deleted_at' =>'2020-03-02'
+            'ukrn_deleted_at' =>$now
         ]; 
         if($this->db->where('id_ukuran',$id_ukuran)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

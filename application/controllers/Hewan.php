@@ -76,7 +76,7 @@ Class Hewan extends REST_Controller{
         } 
     } 
 
-    public function index_delete($id = null){ 
+    public function delete_post($id = null){ 
         $hewan = new HewanData(); 
         $hewan->hwn_deleted_by = $this->post('hwn_deleted_by');
 

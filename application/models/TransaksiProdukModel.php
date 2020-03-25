@@ -1,0 +1,87 @@
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+class TransaksiProdukModel extends CI_Model 
+{ 
+    private $table = 'transaksi_produk'; 
+    public $id_trans_produk; 
+    public $id_pegawai; 
+    public $peg_id_pegawai; 
+    public $id_hewan; 
+    public $tanggal_trans_produk;
+    public $diskon_produk; 
+    public $total_produk; 
+    public $status_penjualan_produk;
+    public $transproduk_created_by; 
+    public $transproduk_edited_by; 
+    public $transproduk_deleted_by;
+    public $rule = [ 
+        [ 
+            'field' => 'id_pegawai', 
+            'label' => 'id_pegawai', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'id_hewan', 
+            'label' => 'id_hewan', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'tanggal_trans_produk', 
+            'label' => 'tanggal_trans_produk', 
+            'rules' => 'required' 
+        ],
+        [ 
+            'field' => 'status_penjualan_produk', 
+            'label' => 'status_penjualan_produk', 
+            'rules' => 'required' 
+        ], 
+    ]; 
+    public function Rules() { return $this->rule; } 
+    
+    public function store($request) { 
+        $this->id_pegawai = $request->id_pegawai; 
+        $this->peg_id_pegawai = $request->peg_id_pegawai; 
+        $this->id_hewan = $request->id_hewan;
+        $this->tanggal_trans_produk = $request->tanggal_trans_produk; 
+        $this->status_penjualan_produk = $request->status_penjualan_produk; 
+        $this->transproduk_created_by = $request->transproduk_created_by; 
+
+        if($this->db->insert($this->table, $this)){ 
+            return ['msg'=>'Success','error'=>false];
+        } 
+        return ['msg'=>'Failed','error'=>true]; 
+    } 
+    public function update($request,$id_trans_produk) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
+        $updateData = [
+            'id_pegawai' =>$request->id_pegawai,
+            'peg_id_pegawai' =>$request->peg_id_pegawai,
+            'id_hewan' =>$request->id_hewan,
+            'tanggal_trans_produk' =>$request->tanggal_trans_produk,
+            'status_penjualan_produk' =>$request->status_penjualan_produk,
+            'transproduk_edited_at' =>$now,
+            'transproduk_edited_by' =>$$request->transproduk_edited_by
+        ]; 
+        if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $updateData)){ 
+            return ['msg'=>'Success','error'=>false]; 
+        } 
+        return ['msg'=>'Failed','error'=>true]; 
+    } 
+
+    public function destroy($id_trans_produk){ 
+        if (empty($this->db->select('*')->where(array('id_trans_produk' => $id_trans_produk))->get($this->table)->row())) 
+        return ['msg'=>'Id Not Found','error'=>true];
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s"); 
+        $deleteData = [
+            'transproduk_deleted_at' =>$now,
+            'transproduk_deleted_by' =>$$request->transproduk_edited_by
+        ]; 
+        if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $deleteData)){ 
+            return ['msg'=>'Success','error'=>false]; 
+        } 
+        return ['msg'=>'Failed','error'=>true];
+    }  
+} 
+?>

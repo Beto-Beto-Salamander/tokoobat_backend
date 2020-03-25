@@ -1,14 +1,14 @@
 <?php
 use Restserver \Libraries\REST_Controller ; 
 
-Class Supplier extends REST_Controller{
+Class DetailPengadaan extends REST_Controller{
 
     public function __construct(){ 
         header('Access-Control-Allow-Origin: *'); 
         header("Access-Control-Allow-Methods: GET, OPTIONS, POST, DELETE"); 
         header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, Authorization"); 
         parent::__construct(); 
-        $this->load->model('SupplierModel'); 
+        $this->load->model('DetailPengadaanModel'); 
         $this->load->library('PHPMailer_Library'); 
         $this->load->library('form_validation'); $this->load->helper(['jwt','authorization']);
     } 
@@ -20,32 +20,32 @@ Class Supplier extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('supplier',array('id_supplier'))->result(), false);
+            return $this->returnData($this->db->get_where('detail_pengadaan',array('id_detail_pengadaan'))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('supplier',array('id_supplier' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('detail_pengadaan',array('id_detail_pengadaan' => $id))->result(), false);
         }
             
     } 
 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
-        $rule = $this->SupplierModel->rules(); 
+        $rule = $this->DetailPengadaanModel->rules(); 
         if($id == null){ 
             array_push($rule,
                 [ 
-                    'field' => 'nama_supplier', 
-                    'label' => 'nama_supplier', 
+                    'field' => 'tgl_detail_pengadaan', 
+                    'label' => 'tgl_detail_pengadaan', 
                     'rules' => 'required' 
                 ], 
                 [ 
-                    'field' => 'alamat_supplier', 
-                    'label' => 'alamat_supplier', 
+                    'field' => 'total_detail_pengadaan', 
+                    'label' => 'total_detail_pengadaan', 
                     'rules' => 'required' 
                 ],
                 [ 
-                    'field' => 'telp_supplier', 
-                    'label' => 'telp_supplier', 
+                    'field' => 'status_detail_pengadaan', 
+                    'label' => 'status_detail_pengadaan', 
                     'rules' => 'required' 
                 ] 
             ); 
@@ -56,20 +56,20 @@ Class Supplier extends REST_Controller{
         } 
 
         if($id == null){
-            $supplier = new SupplierData(); 
-            $supplier->nama_supplier = $this->post('nama_supplier'); 
-            $supplier->alamat_supplier  = $this->post('alamat_supplier'); 
-            $supplier->telp_supplier = $this->post('telp_supplier');
+            $detail_pengadaan = new DetailPengadaanData(); 
+            $detail_pengadaan->tgl_detail_pengadaan = $this->post('tgl_detail_pengadaan'); 
+            $detail_pengadaan->total_detail_pengadaan  = $this->post('total_detail_pengadaan'); 
+            $detail_pengadaan->status_detail_pengadaan = $this->post('status_detail_pengadaan');
 
-            $response = $this->SupplierModel->store($supplier);
+            $response = $this->DetailPengadaanModel->store($detail_pengadaan);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
-            $supplier = new SupplierData(); 
-            $supplier->nama_supplier = $this->post('nama_supplier'); 
-            $supplier->alamat_supplier  = $this->post('alamat_supplier'); 
-            $supplier->telp_supplier = $this->post('telp_supplier');  
+            $detail_pengadaan = new DetailPengadaanData(); 
+            $detail_pengadaan->tgl_detail_pengadaan = $this->post('tgl_detail_pengadaan'); 
+            $detail_pengadaan->total_detail_pengadaan  = $this->post('total_detail_pengadaan'); 
+            $detail_pengadaan->status_detail_pengadaan = $this->post('status_detail_pengadaan');  
 
-            $response = $this->SupplierModel->update($supplier,$id); 
+            $response = $this->DetailPengadaanModel->update($detail_pengadaan,$id); 
             return $this->returnData($response['msg'], $response['error']);
         } 
        
@@ -81,7 +81,7 @@ Class Supplier extends REST_Controller{
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 
         } 
-        $response = $this->SupplierModel->destroy($id); 
+        $response = $this->DetailPengadaanModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
     public function returnData($msg,$error){ 
@@ -104,7 +104,7 @@ Class Supplier extends REST_Controller{
     // $token = explode(" ",$header)[1];
     try {
         // Validate the token
-        // Successfull validation will return the decoded supplier data else returns false
+        // Successfull validation will return the decoded detail_pengadaan data else returns false
         $data = AUTHORIZATION::validateToken($header);
         if ($data === false) {
             $status = parent::HTTP_UNAUTHORIZED;
@@ -124,9 +124,9 @@ Class Supplier extends REST_Controller{
         }
     }
 } 
-Class SupplierData{ 
-    public $nama_supplier; 
-    public $alamat_supplier; 
-    public $telp_supplier;
-    public $sup_deleted_at; 
+Class DetailPengadaanData{ 
+    public $tgl_detail_pengadaan; 
+    public $total_detail_pengadaan; 
+    public $status_detail_pengadaan;
+    public $adaan_deleted_at; 
 }

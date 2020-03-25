@@ -49,12 +49,15 @@ class CustomerModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_customer) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'nama_customer' =>$request->nama_customer,
             'alamat_customer' =>$request->alamat_customer,
             'tgllahir_customer' =>$request->tgllahir_customer,
             'telp_customer' =>$request->telp_customer,
-            'cust_edited_by' =>$request->cust_edited_by
+            'cust_edited_by' =>$request->cust_edited_by,
+            'cust_edited_at' =>$now
         ]; 
         if($this->db->where('id_customer',$id_customer)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -65,11 +68,15 @@ class CustomerModel extends CI_Model
     public function destroy($request, $id_customer){ 
         if (empty($this->db->select('*')->where(array('id_customer' => $id_customer))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'cust_deleted_at' =>'2020-03-02',
-            'cust_deleted_by' =>$request->cust_deleted_by
+            'cust_deleted_by' =>$request->cust_deleted_by,
+            'cust_deleted_at' =>$now
         ]; 
         if($this->db->where('id_customer',$id_customer)->update($this->table, $deleteData)){ 
+            // $this->db->set('cust_deleted_at', 'NOW()');
+            // $this->db->where('id_customer', $id_customer);
             return ['msg'=>'Success','error'=>false]; 
         } 
         return ['msg'=>'Failed','error'=>true];
@@ -90,24 +97,5 @@ class CustomerModel extends CI_Model
         $this->db->where($where)->update($this->table,$update);
             
     }
-
-    // private function _uploadImage()
-    // {
-    //     $config['upload_path']          = './upload/profile_pict/';
-    //     $config['allowed_types']        = 'gif|jpg|png';
-    //     $config['file_name']            = $this->full_name;
-    //     $config['overwrite']			= true;
-    //     $config['max_size']             = 1024; // 1MB
-    //     // $config['max_width']            = 1024;
-    //     // $config['max_height']           = 768;
-
-    //     $this->load->library('upload', $config);
-
-    //     if ($this->upload->do_upload('profile_pict')) {
-    //         return $this->upload->data("file_name");
-    //     }else{
-    //         return "default.jpg";
-    //     }
-    // }
 } 
 ?>

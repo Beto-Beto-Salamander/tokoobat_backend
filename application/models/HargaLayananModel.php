@@ -46,11 +46,14 @@ class HargaLayananModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_harga_layanan) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'id_layanan' => $request->id_layanan,
             'id_jenis' => $request->id_jenis,
             'id_ukuran' => $request->id_ukuran,
-            'id_harga_layanan' => $request->id_harga_layanan
+            'id_harga_layanan' => $request->id_harga_layanan,
+            'harga_deleted_at' =>$now
         ]; 
         if($this->db->where('id_harga_layanan',$id_harga_layanan)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -61,8 +64,10 @@ class HargaLayananModel extends CI_Model
     public function destroy($id_harga_layanan){ 
         if (empty($this->db->select('*')->where(array('id_harga_layanan' => $id_harga_layanan))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'harga_deleted_at' =>'2020-03-02'
+            'harga_deleted_at' =>$now
         ]; 
         if($this->db->where('id_harga_layanan',$id_harga_layanan)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

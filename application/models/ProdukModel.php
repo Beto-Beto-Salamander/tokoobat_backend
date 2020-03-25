@@ -65,6 +65,8 @@ class ProdukModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_produk) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'nama_produk' => $request->nama_produk,
             'foto_produk' => $this->_uploadImage,
@@ -72,6 +74,7 @@ class ProdukModel extends CI_Model
             'harga_jual_produk' => $request->harga_jual_produk,
             'stok' => $request->stok,
             'min_stok' => $request->min_stok,
+            'produk_edited_at' =>$now
         ];
         if($this->db->where('id_produk',$id_produk)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -82,8 +85,10 @@ class ProdukModel extends CI_Model
     public function destroy($id_produk){ 
         if (empty($this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'produk_deleted_at' =>'2020-03-02'
+            'produk_deleted_at' =>$now
         ]; 
         if($this->db->where('id_produk',$id_produk)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

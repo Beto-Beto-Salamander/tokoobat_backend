@@ -143,7 +143,7 @@ Class Pegawai extends REST_Controller{
         return $response;
     }
 
-    public function index_delete($id = null){ 
+    public function delete_post($id = null){ 
         $pegawai = new PegawaiData(); 
         $pegawai->peg_deleted_by = $this->post('peg_deleted_by');
 

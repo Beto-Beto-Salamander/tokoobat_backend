@@ -105,7 +105,7 @@ Class Produk extends REST_Controller{
         
     }
 
-    public function index_delete($id = null){ 
+    public function delete_post($id = null){ 
         $produk = new ProdukData(); 
 
         if($id == null){ 

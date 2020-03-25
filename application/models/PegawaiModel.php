@@ -49,12 +49,14 @@ class PegawaiModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_pegawai) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'nama_pegawai' =>$request->nama_pegawai,
             'alamat_pegawai' =>$request->alamat_pegawai,
             'tgllahir_pegawai' =>$request->tgllahir_pegawai,
             'telp_pegawai' =>$request->telp_pegawai,
-            'peg_edited_by' =>$request->peg_edited_by
+            'peg_edited_at' =>$now
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -65,9 +67,10 @@ class PegawaiModel extends CI_Model
     public function destroy($request, $id_pegawai){ 
         if (empty($this->db->select('*')->where(array('id_pegawai' => $id_pegawai))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'peg_deleted_at' =>'2020-03-02',
-            'peg_deleted_by' =>$request->peg_deleted_by
+            'peg_deleted_at' =>$now,
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

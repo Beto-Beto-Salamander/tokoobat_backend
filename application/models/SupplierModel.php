@@ -39,10 +39,13 @@ class SupplierModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_supplier) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'nama_supplier' =>$request->nama_supplier,
             'alamat_supplier' =>$request->alamat_supplier,
-            'telp_supplier' =>$request->telp_supplier
+            'telp_supplier' =>$request->telp_supplier,
+            'sup_edited_at' =>$now
         ]; 
         if($this->db->where('id_supplier',$id_supplier)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -52,9 +55,11 @@ class SupplierModel extends CI_Model
 
     public function destroy($id_supplier){ 
         if (empty($this->db->select('*')->where(array('id_supplier' => $id_supplier))->get($this->table)->row())) 
-        return ['msg'=>'Id Not Found','error'=>true]; 
+        return ['msg'=>'Id Not Found','error'=>true];
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s"); 
         $deleteData = [
-            'sup_deleted_at' =>'2020-03-02'
+            'sup_deleted_at' =>$now
         ]; 
         if($this->db->where('id_supplier',$id_supplier)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

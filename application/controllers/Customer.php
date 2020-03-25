@@ -143,10 +143,9 @@ Class Customer extends REST_Controller{
         return $response;
     }
 
-    public function index_delete($id = null){ 
+    public function delete_post($id = null){ 
         $customer = new CustomerData(); 
         $customer->cust_deleted_by = $this->post('cust_deleted_by');
-
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 
         } 

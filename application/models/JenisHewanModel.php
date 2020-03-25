@@ -24,8 +24,11 @@ class JenisHewanModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_jenis) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'jenis' =>$request->jenis,
+            'jns_edited_at' =>$now
         ]; 
         if($this->db->where('id_jenis',$id_jenis)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -36,8 +39,10 @@ class JenisHewanModel extends CI_Model
     public function destroy($id_jenis){ 
         if (empty($this->db->select('*')->where(array('id_jenis' => $id_jenis))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'jns_deleted_at' =>'2020-03-02'
+            'jns_deleted_at' =>$now
         ]; 
         if($this->db->where('id_jenis',$id_jenis)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

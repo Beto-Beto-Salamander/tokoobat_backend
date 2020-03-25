@@ -24,8 +24,11 @@ class LayananModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_layanan) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'nama_layanan' =>$request->nama_layanan,
+            'lay_edited_at' =>$now
         ]; 
         if($this->db->where('id_layanan',$id_layanan)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -36,8 +39,10 @@ class LayananModel extends CI_Model
     public function destroy($id_layanan){ 
         if (empty($this->db->select('*')->where(array('id_layanan' => $id_layanan))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $deleteData = [
-            'lay_deleted_at' =>'2020-03-02'
+            'lay_deleted_at' =>$now
         ]; 
         if($this->db->where('id_layanan',$id_layanan)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

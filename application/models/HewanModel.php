@@ -42,11 +42,14 @@ class HewanModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
     public function update($request,$id_hewan) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s");
         $updateData = [
             'id_customer' =>$request->id_customer,
             'nama_hewan' =>$request->nama_hewan,
             'tgllahir_hewan' =>$request->tgllahir_hewan,
-            'hwn_edited_by' =>$request->hwn_edited_by
+            'hwn_edited_by' =>$request->hwn_edited_by,
+            'hwn_edited_at' =>$now
         ]; 
         if($this->db->where('id_hewan',$id_hewan)->update($this->table, $updateData)){ 
             return ['msg'=>'Success','error'=>false]; 
@@ -56,9 +59,11 @@ class HewanModel extends CI_Model
 
     public function destroy($request, $id_hewan){ 
         if (empty($this->db->select('*')->where(array('id_hewan' => $id_hewan))->get($this->table)->row())) 
-        return ['msg'=>'Id Not Found','error'=>true]; 
+        return ['msg'=>'Id Not Found','error'=>true];
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d H:i:s"); 
         $deleteData = [
-            'hwn_deleted_at' =>'2020-03-02',
+            'hwn_deleted_at' =>$now,
             'hwn_deleted_by' =>$request->hwn_deleted_by
         ]; 
         if($this->db->where('id_hewan',$id_hewan)->update($this->table, $deleteData)){ 
