@@ -20,10 +20,10 @@ Class Pengadaan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('pengadaan',array('id_pengadaan'))->result(), false);
+            return $this->returnData($this->db->get_where('pengadaan',array('adaan_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('pengadaan',array('id_pengadaan' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('pengadaan',array('id_pengadaan' => $id,'adaan_deleted_at'=>null))->result(), false);
         }
             
     } 

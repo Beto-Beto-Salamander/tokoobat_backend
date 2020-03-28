@@ -69,14 +69,14 @@ class TransaksiLayananModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
 
-    public function destroy($id_trans_layanan){ 
+    public function destroy($request,$id_trans_layanan){ 
         if (empty($this->db->select('*')->where(array('id_trans_layanan' => $id_trans_layanan))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true];
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s"); 
         $deleteData = [
             'translay_deleted_at' =>$now,
-            'translay_deleted_by' =>$$request->translay_edited_by
+            'translay_deleted_by' =>$request->translay_deleted_by
         ]; 
         if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

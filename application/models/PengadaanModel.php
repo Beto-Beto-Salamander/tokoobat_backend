@@ -7,7 +7,6 @@ class PengadaanModel extends CI_Model
     public $tgl_pengadaan; 
     public $total_pengadaan; 
     public $status_pengadaan; 
-    public $adaan_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'tgl_pengadaan', 

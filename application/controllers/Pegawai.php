@@ -20,10 +20,10 @@ Class Pegawai extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai'))->result(), false);
+            return $this->returnData($this->db->get_where('pegawai',array('peg_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai' => $id,'peg_deleted_at'=>null))->result(), false);
         }
             
     } 

@@ -11,7 +11,6 @@ class ProdukModel extends CI_Model
     public $harga_jual_produk; 
     public $stok; 
     public $min_stok;
-    public $produk_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'id_supplier', 

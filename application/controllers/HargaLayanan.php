@@ -20,10 +20,10 @@ Class HargaLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('harga_layanan',array('id_harga_layanan'))->result(), false);
+            return $this->returnData($this->db->get_where('harga_layanan',array('harga_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('harga_layanan',array('id_harga_layanan' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('harga_layanan',array('id_harga_layanan' => $id,'harga_deleted_at'=>null))->result(), false);
         }
             
     } 

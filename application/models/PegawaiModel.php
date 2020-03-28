@@ -8,7 +8,6 @@ class PegawaiModel extends CI_Model
     public $alamat_pegawai; 
     public $tgllahir_pegawai; 
     public $telp_pegawai; 
-    public $peg_deleted_at;
     public $peg_created_by;
     public $peg_edited_by;
     public $peg_deleted_by;

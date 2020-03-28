@@ -20,10 +20,10 @@ Class Hewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('hewan',array('id_hewan'))->result(), false);
+            return $this->returnData($this->db->get_where('hewan',array('hwn_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('hewan',array('id_hewan' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('hewan',array('id_hewan' => $id,'hwn_deleted_at'=>null))->result(), false);
         }
             
     } 

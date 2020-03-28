@@ -20,10 +20,10 @@ Class TransaksiLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('transaksi_layanan',array('id_trans_layanan'))->result(), false);
+            return $this->returnData($this->db->get_where('transaksi_layanan',array('translay_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('transaksi_layanan',array('id_trans_layanan' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('transaksi_layanan',array('id_trans_layanan' => $id,'translay_deleted_at'=>null))->result(), false);
         }
             
     } 
@@ -86,11 +86,12 @@ Class TransaksiLayanan extends REST_Controller{
     } 
 
     public function delete_post($id = null){ 
-
+        $translay = new TransaksiLayananData();
+        $translay->translay_deleted_by = $this->post('translay_deleted_by');
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 
         } 
-        $response = $this->TransaksiLayananModel->destroy($id); 
+        $response = $this->TransaksiLayananModel->destroy($translay,$id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
     public function returnData($msg,$error){ 

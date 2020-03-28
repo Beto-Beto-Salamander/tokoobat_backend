@@ -69,14 +69,14 @@ class TransaksiProdukModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
 
-    public function destroy($id_trans_produk){ 
+    public function destroy($request,$id_trans_produk){ 
         if (empty($this->db->select('*')->where(array('id_trans_produk' => $id_trans_produk))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true];
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s"); 
         $deleteData = [
             'transproduk_deleted_at' =>$now,
-            'transproduk_deleted_by' =>$$request->transproduk_edited_by
+            'transproduk_deleted_by' =>$$request->transproduk_deleted_by
         ]; 
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $deleteData)){ 
             return ['msg'=>'Success','error'=>false]; 

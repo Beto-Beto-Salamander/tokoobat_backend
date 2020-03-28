@@ -5,7 +5,6 @@ class LayananModel extends CI_Model
     private $table = 'layanan'; 
     public $id_layanan; 
     public $nama_layanan; 
-    public $lay_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'nama_layanan', 

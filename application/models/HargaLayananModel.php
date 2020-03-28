@@ -8,7 +8,6 @@ class HargaLayananModel extends CI_Model
     public $id_jenis;
     public $id_ukuran;
     public $harga_layanan;
-    public $harga_deleted_at;
     
     public $rule = [ 
         [ 

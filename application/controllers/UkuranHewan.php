@@ -20,10 +20,10 @@ Class UkuranHewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('ukuran_hewan',array('id_ukuran'))->result(), false);
+            return $this->returnData($this->db->get_where('ukuran_hewan',array('ukrn_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('ukuran_hewan',array('id_ukuran' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('ukuran_hewan',array('id_ukuran' => $id,'ukrn_deleted_at'=>null))->result(), false);
         }
             
     } 

@@ -20,10 +20,10 @@ Class JenisHewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('jenis_hewan',array('id_jenis'))->result(), false);
+            return $this->returnData($this->db->get_where('jenis_hewan',array('jns_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('jenis_hewan',array('id_jenis' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('jenis_hewan',array('id_jenis' => $id,'jns_deleted_at'=>null))->result(), false);
         }
             
     } 

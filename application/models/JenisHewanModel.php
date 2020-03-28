@@ -5,7 +5,6 @@ class JenisHewanModel extends CI_Model
     private $table = 'jenis_hewan'; 
     public $id_jenis; 
     public $jenis; 
-    public $jns_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'jenis', 

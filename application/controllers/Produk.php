@@ -20,10 +20,10 @@ Class Produk extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('produk',array('id_produk'))->result(), false);
+            return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('produk',array('id_produk' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('produk',array('id_produk' => $id,'produk_deleted_at'=>null))->result(), false);
         }
             
     } 

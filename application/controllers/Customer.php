@@ -20,27 +20,13 @@ Class Customer extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('customer',array('id_customer'))->result(), false);
+            return $this->returnData($this->db->get_where('customer',array('cust_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('customer',array('id_customer' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('customer',array('id_customer' => $id,'cust_deleted_at' => null))->result(), false);
         }
             
     } 
-
-    public function verify_post()
-    {
-        $customer = new CustomerData();
-        $customer->email = $this->post('email');   
-        $customer->password = $this->post('password');
-
-        if ($result = $this->CustomerModel->verify($customer)) { 
-            $response = ['id' => $result['id'], 'full_name' => $result['full_name'], 'email' => $result['email']];
-            return $this->response($response);
-        } else {
-            return $this->response('Failed');
-        }
-    }
 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
@@ -196,8 +182,7 @@ Class CustomerData{
     public $nama_customer; 
     public $alamat_customer; 
     public $tgllahir_customer;
-    public $telp_customer;
-    public $cust_deleted_at; 
+    public $telp_customer; 
     public $cust_created_by; 
     public $cust_edited_by;
     public $cust_deleted_by;

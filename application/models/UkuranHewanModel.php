@@ -5,7 +5,6 @@ class UkuranHewanModel extends CI_Model
     private $table = 'ukuran_hewan'; 
     public $id_ukuran; 
     public $ukuran; 
-    public $ukrn_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'ukuran', 

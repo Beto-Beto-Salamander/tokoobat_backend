@@ -20,10 +20,10 @@ Class Supplier extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('supplier',array('id_supplier'))->result(), false);
+            return $this->returnData($this->db->get_where('supplier',array('sup_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('supplier',array('id_supplier' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('supplier',array('id_supplier' => $id,'sup_deleted_at'=>null))->result(), false);
         }
             
     } 
@@ -128,5 +128,4 @@ Class SupplierData{
     public $nama_supplier; 
     public $alamat_supplier; 
     public $telp_supplier;
-    public $sup_deleted_at; 
 }

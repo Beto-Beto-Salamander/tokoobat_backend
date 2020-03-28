@@ -34,18 +34,18 @@ Class DetailPengadaan extends REST_Controller{
         if($id == null){ 
             array_push($rule,
                 [ 
-                    'field' => 'tgl_detail_pengadaan', 
-                    'label' => 'tgl_detail_pengadaan', 
+                    'field' => 'id_pengadaan', 
+                    'label' => 'id_pengadaan', 
                     'rules' => 'required' 
                 ], 
                 [ 
-                    'field' => 'total_detail_pengadaan', 
-                    'label' => 'total_detail_pengadaan', 
+                    'field' => 'id_produk', 
+                    'label' => 'id_produk', 
                     'rules' => 'required' 
                 ],
                 [ 
-                    'field' => 'status_detail_pengadaan', 
-                    'label' => 'status_detail_pengadaan', 
+                    'field' => 'jml_pengadaan_produk', 
+                    'label' => 'jml_pengadaan_produk', 
                     'rules' => 'required' 
                 ] 
             ); 
@@ -57,17 +57,17 @@ Class DetailPengadaan extends REST_Controller{
 
         if($id == null){
             $detail_pengadaan = new DetailPengadaanData(); 
-            $detail_pengadaan->tgl_detail_pengadaan = $this->post('tgl_detail_pengadaan'); 
-            $detail_pengadaan->total_detail_pengadaan  = $this->post('total_detail_pengadaan'); 
-            $detail_pengadaan->status_detail_pengadaan = $this->post('status_detail_pengadaan');
+            $detail_pengadaan->id_pengadaan = $this->post('id_pengadaan'); 
+            $detail_pengadaan->id_produk  = $this->post('id_produk'); 
+            $detail_pengadaan->jml_pengadaan_produk = $this->post('jml_pengadaan_produk');
 
             $response = $this->DetailPengadaanModel->store($detail_pengadaan);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_pengadaan = new DetailPengadaanData(); 
-            $detail_pengadaan->tgl_detail_pengadaan = $this->post('tgl_detail_pengadaan'); 
-            $detail_pengadaan->total_detail_pengadaan  = $this->post('total_detail_pengadaan'); 
-            $detail_pengadaan->status_detail_pengadaan = $this->post('status_detail_pengadaan');  
+            $detail_pengadaan->id_pengadaan = $this->post('id_pengadaan'); 
+            $detail_pengadaan->id_produk  = $this->post('id_produk'); 
+            $detail_pengadaan->jml_pengadaan_produk = $this->post('jml_pengadaan_produk');  
 
             $response = $this->DetailPengadaanModel->update($detail_pengadaan,$id); 
             return $this->returnData($response['msg'], $response['error']);
@@ -125,8 +125,7 @@ Class DetailPengadaan extends REST_Controller{
     }
 } 
 Class DetailPengadaanData{ 
-    public $tgl_detail_pengadaan; 
-    public $total_detail_pengadaan; 
-    public $status_detail_pengadaan;
-    public $adaan_deleted_at; 
+    public $id_pengadaan; 
+    public $id_produk; 
+    public $jml_pengadaan_produk;
 }

@@ -20,10 +20,10 @@ Class Layanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('layanan',array('id_layanan'))->result(), false);
+            return $this->returnData($this->db->get_where('layanan',array('lay_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('layanan',array('id_layanan' => $id))->result(), false);
+            return $this->returnData($this->db->get_where('layanan',array('id_layanan' => $id,'lay_deleted_at'=>null))->result(), false);
         }
             
     } 

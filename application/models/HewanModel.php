@@ -7,7 +7,6 @@ class HewanModel extends CI_Model
     public $id_customer; 
     public $nama_hewan; 
     public $tgllahir_hewan; 
-    public $hwn_deleted_at;
     public $hwn_created_by;
     public $hwn_edited_by;
     public $hwn_deleted_by;

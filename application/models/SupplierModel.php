@@ -8,7 +8,6 @@ class SupplierModel extends CI_Model
     public $alamat_supplier; 
     public $tgllahir_supplier; 
     public $telp_supplier; 
-    public $sup_deleted_at;
     public $rule = [ 
         [ 
             'field' => 'nama_supplier', 

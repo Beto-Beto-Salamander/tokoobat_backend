@@ -8,7 +8,6 @@ class CustomerModel extends CI_Model
     public $alamat_customer; 
     public $tgllahir_customer; 
     public $telp_customer; 
-    public $cust_deleted_at;
     public $cust_created_by;
     public $cust_edited_by;
     public $cust_deleted_by;
