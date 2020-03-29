@@ -8,9 +8,6 @@ class PegawaiModel extends CI_Model
     public $alamat_pegawai; 
     public $tgllahir_pegawai; 
     public $telp_pegawai; 
-    public $peg_created_by;
-    public $peg_edited_by;
-    public $peg_deleted_by;
     public $rule = [ 
         [ 
             'field' => 'nama_pegawai', 
@@ -31,6 +28,21 @@ class PegawaiModel extends CI_Model
             'field' => 'telp_pegawai', 
             'label' => 'telp_pegawai', 
             'rules' => 'required' 
+        ],
+        [ 
+            'field' => 'role_pegawai', 
+            'label' => 'role_pegawai', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'username', 
+            'label' => 'username', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'password', 
+            'label' => 'password', 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 
@@ -40,7 +52,9 @@ class PegawaiModel extends CI_Model
         $this->alamat_pegawai = $request->alamat_pegawai;
         $this->tgllahir_pegawai = $request->tgllahir_pegawai; 
         $this->telp_pegawai = $request->telp_pegawai;
-        $this->peg_created_by = $request->peg_created_by;
+        $this->role_pegawai = $request->role_pegawai;
+        $this->username = $request->username; 
+        $this->password = $request->password;
 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Success','error'=>false];
@@ -55,6 +69,9 @@ class PegawaiModel extends CI_Model
             'alamat_pegawai' =>$request->alamat_pegawai,
             'tgllahir_pegawai' =>$request->tgllahir_pegawai,
             'telp_pegawai' =>$request->telp_pegawai,
+            'role_pegawai' =>$request->role_pegawai,
+            'username' =>$request->username,
+            'password' =>$request->password,
             'peg_edited_at' =>$now
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $updateData)){ 
@@ -63,7 +80,7 @@ class PegawaiModel extends CI_Model
         return ['msg'=>'Failed','error'=>true]; 
     } 
 
-    public function destroy($request, $id_pegawai){ 
+    public function destroy($id_pegawai){ 
         if (empty($this->db->select('*')->where(array('id_pegawai' => $id_pegawai))->get($this->table)->row())) 
         return ['msg'=>'Id Not Found','error'=>true]; 
         date_default_timezone_set('Asia/Jakarta');
