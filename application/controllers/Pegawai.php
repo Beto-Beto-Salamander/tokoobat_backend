@@ -75,7 +75,7 @@ Class Pegawai extends REST_Controller{
                 [ 
                     'field' => 'username', 
                     'label' => 'username', 
-                    'rules' => 'required' 
+                    'rules' => 'required|is_unique[pegawai.username]' 
                 ],
                 [ 
                     'field' => 'password', 

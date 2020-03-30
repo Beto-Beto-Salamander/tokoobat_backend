@@ -11,7 +11,7 @@ class Auth extends REST_Controller
         header("Access-Control-Allow-Methods: GET, OPTIONS, POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding ");
         parent::__construct();
-        $this->load->model('UserModel');
+        $this->load->model('PegawaiModel');
         $this->load->library('form_validation');
         $this->load->helper(['jwt', 'authorization']);
     }
@@ -25,9 +25,9 @@ class Auth extends REST_Controller
                 'rules' => 'required'
             ],
             [
-                'field' => 'email',
-                'label' => 'email',
-                'rules' => 'required|valid_email'
+                'field' => 'username',
+                'label' => 'username',
+                'rules' => 'required'
             ]
         ];
     }
@@ -40,12 +40,12 @@ class Auth extends REST_Controller
         if (!$validation->run()) {
             return $this->response($this->form_validation->error_array());
         }
-        $user = new UserData();
+        $user = new PegawaiData();
         $user->password = $this->post('password');
-        $user->email = $this->post('email');
+        $user->username = $this->post('username');
 
-        if ($result = $this->UserModel->verify($user)) { 
-            $token = AUTHORIZATION::generateToken(['id' => $result['id'], 'full_name' => $result['full_name']]);
+        if ($result = $this->PegawaiModel->verify($user)) { 
+            $token = AUTHORIZATION::generateToken(['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai']]);
             $status = parent::HTTP_OK;
             $response = ['status' => $status, 'token' => $token];
             return $this->response($response, $status);
@@ -54,9 +54,8 @@ class Auth extends REST_Controller
         }
     }
 }
-class UserData
+class PegawaiData
 {
-    public $full_name;
     public $password;
-    public $email;
+    public $username;
 }

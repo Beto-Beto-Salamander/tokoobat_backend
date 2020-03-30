@@ -37,7 +37,7 @@ class PegawaiModel extends CI_Model
         [ 
             'field' => 'username', 
             'label' => 'username', 
-            'rules' => 'required' 
+            'rules' => 'required|is_unique[pegawai.username]' 
         ], 
         [ 
             'field' => 'password', 
@@ -54,7 +54,7 @@ class PegawaiModel extends CI_Model
         $this->telp_pegawai = $request->telp_pegawai;
         $this->role_pegawai = $request->role_pegawai;
         $this->username = $request->username; 
-        $this->password = $request->password;
+        $this->password = password_hash($request->password, PASSWORD_BCRYPT);
 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Success','error'=>false];
@@ -71,7 +71,7 @@ class PegawaiModel extends CI_Model
             'telp_pegawai' =>$request->telp_pegawai,
             'role_pegawai' =>$request->role_pegawai,
             'username' =>$request->username,
-            'password' =>$request->password,
+            'password' =>password_hash($request->password, PASSWORD_BCRYPT),
             'peg_edited_at' =>$now
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $updateData)){ 
@@ -95,38 +95,15 @@ class PegawaiModel extends CI_Model
     }     
 
     public function verify($request){
-        $user = $this->db->select('*')->where(array('email' => $request->email))->get($this->table)->row_array();
-        if(!empty($user) && password_verify($request->password , $user['password']) && $user['verified']==1) {
-            return $user;
+        $pegawai = $this->db->select('*')->where(array('username' => $request->username))->get($this->table)->row_array();
+        if(!empty($pegawai) && password_verify($request->password , $pegawai['password'])) {
+            return $pegawai;
         } else {
             return false;
         }
     }
 
-    public function verifyuser($email){
-        $where=['email'=>$email];
-        $update=['verified'=>1];
-        $this->db->where($where)->update($this->table,$update);
-            
-    }
 
-    // private function _uploadImage()
-    // {
-    //     $config['upload_path']          = './upload/profile_pict/';
-    //     $config['allowed_types']        = 'gif|jpg|png';
-    //     $config['file_name']            = $this->full_name;
-    //     $config['overwrite']			= true;
-    //     $config['max_size']             = 1024; // 1MB
-    //     // $config['max_width']            = 1024;
-    //     // $config['max_height']           = 768;
-
-    //     $this->load->library('upload', $config);
-
-    //     if ($this->upload->do_upload('profile_pict')) {
-    //         return $this->upload->data("file_name");
-    //     }else{
-    //         return "default.jpg";
-    //     }
-    // }
+    
 } 
 ?>
