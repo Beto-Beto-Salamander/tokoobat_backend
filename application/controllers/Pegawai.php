@@ -31,11 +31,11 @@ Class Pegawai extends REST_Controller{
     public function verify_post()
     {
         $pegawai = new PegawaiData();
-        $pegawai->email = $this->post('email');   
+        $pegawai->username = $this->post('username');   
         $pegawai->password = $this->post('password');
 
         if ($result = $this->PegawaiModel->verify($pegawai)) { 
-            $response = ['id' => $result['id'], 'full_name' => $result['full_name'], 'email' => $result['email']];
+            $response = ['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai']];
             return $this->response($response);
         } else {
             return $this->response('Failed');
@@ -118,12 +118,6 @@ Class Pegawai extends REST_Controller{
         
     } 
 
-    public function verifypegawai_get(){
-        $email=$this->get('email');
-        $response=$this->PegawaiModel->verifypegawai($email);
-        return $response;
-    }
-
     public function delete_post($id = null){ 
 
         if($id == null){ 
@@ -132,6 +126,7 @@ Class Pegawai extends REST_Controller{
         $response = $this->PegawaiModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+    
     public function returnData($msg,$error){ 
         $response['error']=$error; 
         $response['message']=$msg; 

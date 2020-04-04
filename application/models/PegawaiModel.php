@@ -54,7 +54,8 @@ class PegawaiModel extends CI_Model
         $this->telp_pegawai = $request->telp_pegawai;
         $this->role_pegawai = $request->role_pegawai;
         $this->username = $request->username; 
-        $this->password = password_hash($request->password, PASSWORD_BCRYPT);
+        // $this->password = password_hash($request->password, PASSWORD_BCRYPT);
+        $this->password = md5($request->password);
 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Success','error'=>false];
@@ -95,8 +96,9 @@ class PegawaiModel extends CI_Model
     }     
 
     public function verify($request){
-        $pegawai = $this->db->select('*')->where(array('username' => $request->username))->get($this->table)->row_array();
-        if(!empty($pegawai) && password_verify($request->password , $pegawai['password'])) {
+        $pegawai = $this->db->select('*')->where(array('username' => $request->username,'password' => md5($request->password)))->get($this->table)->row_array();
+        // if(!empty($pegawai) && password_verify($request->password , $pegawai['password'])) {
+    if(!empty($pegawai)){
             return $pegawai;
         } else {
             return false;

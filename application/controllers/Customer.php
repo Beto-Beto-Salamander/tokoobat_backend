@@ -138,6 +138,7 @@ Class Customer extends REST_Controller{
         $response = $this->CustomerModel->destroy($customer,$id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+    
     public function returnData($msg,$error){ 
         $response['error']=$error; 
         $response['message']=$msg; 
