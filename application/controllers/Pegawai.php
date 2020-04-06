@@ -28,6 +28,21 @@ Class Pegawai extends REST_Controller{
             
     } 
 
+    public function log_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            return $this->returnData($this->db->get_where('pegawai')->result(), false);
+        }   
+        else{
+            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai' => $id))->result(), false);
+        }
+            
+    } 
+
     public function verify_post()
     {
         $pegawai = new PegawaiData();
@@ -75,7 +90,7 @@ Class Pegawai extends REST_Controller{
                 [ 
                     'field' => 'username', 
                     'label' => 'username', 
-                    'rules' => 'required|is_unique[pegawai.username]' 
+                    'rules' => 'required|callback_is_unique_pegawai' 
                 ],
                 [ 
                     'field' => 'password', 
@@ -85,6 +100,7 @@ Class Pegawai extends REST_Controller{
             ); 
         } 
         $validation->set_rules($rule); 
+        $this->form_validation->set_message('is_unique_pegawai','Username must be unique!');
         if (!$validation->run()) { 
             return $this->returnData($this->form_validation->error_array(), true); 
         }
@@ -117,6 +133,11 @@ Class Pegawai extends REST_Controller{
        
         
     } 
+
+    public function is_unique_pegawai($username)
+    {
+        return $this->PegawaiModel->is_unique_pegawai($username);
+    }
 
     public function delete_post($id = null){ 
 

@@ -12,26 +12,26 @@ class CustomerModel extends CI_Model
     public $cust_edited_by;
     public $cust_deleted_by;
     public $rule = [ 
-        // [ 
-        //     'field' => 'nama_customer', 
-        //     'label' => 'nama_customer', 
-        //     'rules' => 'required' 
-        // ], 
-        // [ 
-        //     'field' => 'alamat_customer', 
-        //     'label' => 'alamat_customer', 
-        //     'rules' => 'required' 
-        // ], 
-        // [ 
-        //     'field' => 'tgllahir_customer', 
-        //     'label' => 'tgllahir_customer', 
-        //     'rules' => 'required' 
-        // ], 
-        // [ 
-        //     'field' => 'telp_customer', 
-        //     'label' => 'telp_customer', 
-        //     'rules' => 'required' 
-        // ]
+        [ 
+            'field' => 'nama_customer', 
+            'label' => 'nama_customer', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'alamat_customer', 
+            'label' => 'alamat_customer', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'tgllahir_customer', 
+            'label' => 'tgllahir_customer', 
+            'rules' => 'required' 
+        ], 
+        [ 
+            'field' => 'telp_customer', 
+            'label' => 'telp_customer', 
+            'rules' => 'required' 
+        ]
     ]; 
     public function Rules() { return $this->rule; } 
     

@@ -28,6 +28,21 @@ Class TransaksiProduk extends REST_Controller{
             
     } 
 
+    public function log_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            return $this->returnData($this->db->get_where('transaksi_produk')->result(), false);
+        }   
+        else{
+            return $this->returnData($this->db->get_where('transaksi_produk',array('id_trans_produk' => $id))->result(), false);
+        }
+            
+    } 
+
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
         $rule = $this->TransaksiProdukModel->rules(); 

@@ -37,7 +37,7 @@ class PegawaiModel extends CI_Model
         [ 
             'field' => 'username', 
             'label' => 'username', 
-            'rules' => 'required|is_unique[pegawai.username]' 
+            'rules' => 'required|callback_is_unique_pegawai' 
         ], 
         [ 
             'field' => 'password', 
@@ -105,6 +105,12 @@ class PegawaiModel extends CI_Model
         }
     }
 
+    public function is_unique_pegawai($username){
+        if (empty($this->db->select('*')->where(array('username' => $username,'peg_deleted_at'=>null))->get($this->table)->row())) 
+        return true;
+        else
+        return false;
+    }
 
     
 } 
