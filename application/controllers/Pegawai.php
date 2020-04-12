@@ -20,7 +20,7 @@ Class Pegawai extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('pegawai',array('peg_deleted_at'=>null))->result(), false);
+            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai >' => -1,'peg_deleted_at'=>null))->result(), false);
         }   
         else{
             return $this->returnData($this->db->get_where('pegawai',array('id_pegawai' => $id,'peg_deleted_at'=>null))->result(), false);
@@ -35,10 +35,10 @@ Class Pegawai extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('pegawai')->result(), false);
+            return $this->returnData($this->db->order_by('peg_deleted_at','ASC')->get_where('pegawai')->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('pegawai',array('id_pegawai' => $id))->result(), false);
+            return $this->returnData($this->db->order_by('peg_deleted_at','ASC')->get_where('pegawai',array('id_pegawai' => $id))->result(), false);
         }
             
     } 
@@ -50,7 +50,7 @@ Class Pegawai extends REST_Controller{
         $pegawai->password = $this->post('password');
 
         if ($result = $this->PegawaiModel->verify($pegawai)) { 
-            $response = ['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai']];
+            $response = ['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai'], 'role_pegawai' => $result['role_pegawai']];
             return $this->response($response);
         } else {
             return $this->response('Failed');

@@ -19,13 +19,24 @@ Class Produk extends REST_Controller{
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
+            
         if($id==null){
-            return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok');
+            $this->db->from('produk as p');
+            $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
+            $this->db->where(array('produk_deleted_at'=>null));
+            // return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('produk',array('id_produk' => $id,'produk_deleted_at'=>null))->result(), false);
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_prodk, p.harga_jual_produk, p.stok, p.min_stok');
+            $this->db->from('produk as p');
+            $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
+            $this->db->where(array('id_produk' => $id,'produk_deleted_at'=>null));
+            // return $this->returnData($this->db->get_where('produk',array('id_produk' => $id,'produk_deleted_at'=>null))->result(), false);
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
 
     public function log_get($id=null){ 
@@ -35,12 +46,21 @@ Class Produk extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('produk')->result(), false);
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok, p.produk_created_at, p.produk_edited_at, p.produk_deleted_at');
+            $this->db->from('produk as p');
+            $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
+            $this->db->order_by('produk_deleted_at','ASC');
         }   
         else{
-            return $this->returnData($this->db->get_where('produk',array('id_produk' => $id))->result(), false);
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok, p.produk_created_at, p.produk_edited_at, p.produk_deleted_at');
+            $this->db->from('produk as p');
+            $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
+            $this->db->where(array('id_produk' => $id));
+            $this->db->order_by('produk_deleted_at','ASC');
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
 
     public function index_post($id = null){ 
@@ -58,11 +78,11 @@ Class Produk extends REST_Controller{
                     'label' => 'nama_produk', 
                     'rules' => 'required' 
                 ], 
-                [ 
-                    'field' => 'foto_produk', 
-                    'label' => 'foto_produk', 
-                    'rules' => 'required' 
-                ],
+                // [ 
+                //     'field' => 'foto_produk', 
+                //     'label' => 'foto_produk', 
+                //     'rules' => 'required' 
+                // ],
                 [ 
                     'field' => 'harga_beli_produk', 
                     'label' => 'harga_beli_produk', 
@@ -98,8 +118,8 @@ Class Produk extends REST_Controller{
             $produk->foto_produk  = $this->post('foto_produk'); 
             $produk->harga_beli_produk = $this->post('harga_beli_produk');
             $produk->harga_jual_produk = $this->post('harga_jual_produk');
-            $produk->nama_produk = $this->post('stok'); 
-            $produk->foto_produk  = $this->post('min_stok');
+            $produk->stok = $this->post('stok'); 
+            $produk->min_stok  = $this->post('min_stok');
 
             $response = $this->ProdukModel->store($produk);
             return $this->returnData($response['msg'], $response['error']); 
@@ -110,8 +130,8 @@ Class Produk extends REST_Controller{
             $produk->foto_produk  = $this->post('foto_produk'); 
             $produk->harga_beli_produk = $this->post('harga_beli_produk');
             $produk->harga_jual_produk = $this->post('harga_jual_produk');
-            $produk->nama_produk = $this->post('stok'); 
-            $produk->foto_produk  = $this->post('min_stok');
+            $produk->stok = $this->post('stok'); 
+            $produk->min_stok  = $this->post('min_stok');
 
             $response = $this->ProdukModel->update($produk,$id); 
             return $this->returnData($response['msg'], $response['error']);
@@ -177,5 +197,4 @@ Class ProdukData{
     public $harga_beli_produk;
     public $stok; 
     public $min_stok; 
-    public $produk_deleted_at;
 }

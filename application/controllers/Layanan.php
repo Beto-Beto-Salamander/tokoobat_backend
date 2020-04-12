@@ -35,10 +35,10 @@ Class Layanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('layanan')->result(), false);
+            return $this->returnData($this->db->order_by('lay_deleted_at','ASC')->get_where('layanan')->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('layanan',array('id_layanan' => $id))->result(), false);
+            return $this->returnData($this->db->order_by('lay_deleted_at','ASC')->get_where('layanan',array('id_layanan' => $id))->result(), false);
         }
             
     } 
@@ -62,13 +62,13 @@ Class Layanan extends REST_Controller{
 
         if($id == null){
             $layanan = new LayananData(); 
-            $layanan->layanan = $this->post('nama_layanan'); 
+            $layanan->nama_layanan = $this->post('nama_layanan'); 
 
             $response = $this->LayananModel->store($layanan);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $layanan = new LayananData(); 
-            $layanan->layanan = $this->post('nama_layanan');  
+            $layanan->nama_layanan = $this->post('nama_layanan');  
 
             $response = $this->LayananModel->update($layanan,$id); 
             return $this->returnData($response['msg'], $response['error']);
@@ -125,5 +125,4 @@ Class Layanan extends REST_Controller{
 } 
 Class LayananData{ 
     public $nama_layanan; 
-    public $lay_deleted_at;
 }

@@ -35,10 +35,10 @@ Class Supplier extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('supplier')->result(), false);
+            return $this->returnData($this->db->order_by('sup_deleted_at','ASC')->get_where('supplier')->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('supplier',array('id_supplier' => $id))->result(), false);
+            return $this->returnData($this->db->order_by('sup_deleted_at','ASC')->get_where('supplier',array('id_supplier' => $id))->result(), false);
         }
             
     } 

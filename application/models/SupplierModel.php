@@ -6,7 +6,6 @@ class SupplierModel extends CI_Model
     public $id_supplier; 
     public $nama_supplier; 
     public $alamat_supplier; 
-    public $tgllahir_supplier; 
     public $telp_supplier; 
     public $rule = [ 
         [ 
