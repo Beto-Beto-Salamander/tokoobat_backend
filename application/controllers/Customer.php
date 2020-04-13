@@ -35,10 +35,10 @@ Class Customer extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->order_by('cust_deletede_at','ASC')->get_where('customer')->result(), false);
+            return $this->returnData($this->db->order_by('cust_deleted_at','ASC')->get_where('customer')->result(), false);
         }   
         else{
-            return $this->returnData($this->db->order_by('cust_deletede_at','ASC')->get_where('customer',array('id_customer' => $id))->result(), false);
+            return $this->returnData($this->db->order_by('cust_deleted_at','ASC')->get_where('customer',array('id_customer' => $id))->result(), false);
         }
             
     } 
@@ -72,7 +72,7 @@ Class Customer extends REST_Controller{
         } 
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         // $customer = new CustomerData(); 

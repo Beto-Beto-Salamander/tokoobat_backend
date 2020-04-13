@@ -73,7 +73,7 @@ Class HargaLayanan extends REST_Controller{
         } 
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){

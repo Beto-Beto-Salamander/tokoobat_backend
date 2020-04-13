@@ -51,13 +51,14 @@ Class JenisHewan extends REST_Controller{
                 [ 
                     'field' => 'jenis', 
                     'label' => 'jenis', 
-                    'rules' => 'required' 
+                    'rules' => 'required|callback_is_unique_jenis' 
                 ]
             ); 
         } 
+        $this->form_validation->set_message('is_unique_jenis','Jenis hewan sudah ada');
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){
@@ -82,6 +83,11 @@ Class JenisHewan extends REST_Controller{
         $response = $this->JenisHewanModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+
+    public function is_unique_jenis($jenis)
+    {
+        return $this->JenisHewanModel->is_unique_jenis($jenis);
+    }
 
     private function verify_request()
     {

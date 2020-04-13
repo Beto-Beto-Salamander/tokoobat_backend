@@ -43,14 +43,15 @@ class Auth extends REST_Controller
         $user = new PegawaiData();
         $user->password = $this->post('password');
         $user->username = $this->post('username');
-
-        if ($result = $this->PegawaiModel->verify($user)) { 
-            $token = AUTHORIZATION::generateToken(['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai']]);
+        $result=$this->PegawaiModel->verify($user);
+        if ($result['error']==false) { 
+            $pegawai=$result['msg'];
+            $token = AUTHORIZATION::generateToken(['id_pegawai' => $pegawai['id_pegawai'], 'nama_pegawai' => $pegawai['nama_pegawai'],'role_pegawai' => $pegawai['role_pegawai']]);
             $status = parent::HTTP_OK;
             $response = ['status' => $status, 'token' => $token];
             return $this->response($response, $status);
         } else {
-            return $this->response('Failed');
+            return $this->response($result['msg']);
         }
     }
 }

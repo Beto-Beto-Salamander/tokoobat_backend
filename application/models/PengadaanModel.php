@@ -27,9 +27,9 @@ class PengadaanModel extends CI_Model
         $this->status_pengadaan = $request->status_pengadaan;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_pengadaan) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -41,9 +41,9 @@ class PengadaanModel extends CI_Model
             'adaan_edited_at' =>$now
         ]; 
         if($this->db->where('id_pengadaan',$id_pengadaan)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($id_pengadaan){ 
@@ -55,9 +55,9 @@ class PengadaanModel extends CI_Model
             'adaan_deleted_at' =>$now
         ]; 
         if($this->db->where('id_pengadaan',$id_pengadaan)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }  
 } 
 ?>

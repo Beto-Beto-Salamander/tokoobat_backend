@@ -51,13 +51,14 @@ Class UkuranHewan extends REST_Controller{
                 [ 
                     'field' => 'ukuran', 
                     'label' => 'ukuran', 
-                    'rules' => 'required' 
+                    'rules' => 'required|callback_is_unique_ukuran' 
                 ]
             ); 
         } 
+        $this->form_validation->set_message('is_unique_ukuran','Ukuran sudah ada');
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){
@@ -83,6 +84,11 @@ Class UkuranHewan extends REST_Controller{
         $response = $this->UkuranHewanModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+
+    public function is_unique_ukuran($ukuran)
+    {
+        return $this->UkuranHewanModel->is_unique_ukuran($ukuran);
+    }
 
     private function verify_request()
     {

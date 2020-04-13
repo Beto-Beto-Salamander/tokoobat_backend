@@ -32,9 +32,9 @@ class SupplierModel extends CI_Model
         $this->telp_supplier = $request->telp_supplier;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_supplier) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -46,9 +46,9 @@ class SupplierModel extends CI_Model
             'sup_edited_at' =>$now
         ]; 
         if($this->db->where('id_supplier',$id_supplier)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($id_supplier){ 
@@ -60,9 +60,9 @@ class SupplierModel extends CI_Model
             'sup_deleted_at' =>$now
         ]; 
         if($this->db->where('id_supplier',$id_supplier)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }  
 } 
 ?>

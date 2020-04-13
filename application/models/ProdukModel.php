@@ -20,7 +20,7 @@ class ProdukModel extends CI_Model
         [ 
             'field' => 'nama_produk', 
             'label' => 'nama_produk', 
-            'rules' => 'required' 
+            'rules' => 'required|callback_is_unique_produk' 
         ], 
         // [ 
         //     'field' => 'foto_produk', 
@@ -60,40 +60,54 @@ class ProdukModel extends CI_Model
         $this->min_stok = $request->min_stok;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_produk) { 
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s");
-        if($request->foto_produk==null){
+        $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
+        $this->id_supplier = $request->id_supplier; 
+        $this->nama_produk = $request->nama_produk; 
+        $this->foto_produk = $this->uploadImage();
+        $this->harga_beli_produk = $request->harga_beli_produk; 
+        $this->harga_jual_produk = $request->harga_jual_produk;
+        $this->stok = $request->stok;
+        $this->min_stok = $request->min_stok;
+        if(!empty($_FILES["foto_produk"])){
+            if ($getProduk->foto_produk != "default.jpg") {
+                $filename = explode(".", $getProduk->foto_produk)[0];
+                array_map('unlink', glob(FCPATH."./upload/foto_produk/$filename.*"));
+            }
             $updateData = [
-                'id_supplier' => $request->id_supplier,
-                'nama_produk' => $request->nama_produk,
-                'harga_beli_produk' => $request->harga_beli_produk, 
-                'harga_jual_produk' => $request->harga_jual_produk,
-                'stok' => $request->stok,
-                'min_stok' => $request->min_stok,
+                'id_supplier' => $this->id_supplier,
+                'nama_produk' => $this->nama_produk,
+                'foto_produk' => $this->uploadImage(),
+                'harga_beli_produk' => $this->harga_beli_produk, 
+                'harga_jual_produk' => $this->harga_jual_produk,
+                'stok' => $this->stok,
+                'min_stok' => $this->min_stok,
                 'produk_edited_at' =>$now
             ];
+            
+            
         }else{
             $updateData = [
-                'id_supplier' => $request->id_supplier,
-                'nama_produk' => $request->nama_produk,
-                'foto_produk' => $this->uploadImage(),
-                'harga_beli_produk' => $request->harga_beli_produk, 
-                'harga_jual_produk' => $request->harga_jual_produk,
-                'stok' => $request->stok,
-                'min_stok' => $request->min_stok,
+                'id_supplier' => $this->id_supplier,
+                'nama_produk' => $this->nama_produk,
+                'harga_beli_produk' => $this->harga_beli_produk, 
+                'harga_jual_produk' => $this->harga_jual_produk,
+                'stok' => $this->stok,
+                'min_stok' => $this->min_stok,
                 'produk_edited_at' =>$now
             ];
         }
         
         if($this->db->where('id_produk',$id_produk)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($id_produk){ 
@@ -108,13 +122,20 @@ class ProdukModel extends CI_Model
         ]; 
         if($this->db->where('id_produk',$id_produk)->update($this->table, $deleteData)){ 
             if ($getProduk->foto_produk != "default.jpg") {
-                $filename = explode(".", $getProduk->image)[0];
+                $filename = explode(".", $getProduk->foto_produk)[0];
                 array_map('unlink', glob(FCPATH."./upload/foto_produk/$filename.*"));
             }
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }  
+
+    public function is_unique_produk($nama_produk){
+        if (empty($this->db->select('*')->where(array('nama_produk' => $nama_produk,'produk_deleted_at'=>null))->get($this->table)->row())) 
+        return true;
+        else
+        return false;
+    }
 
     private function uploadImage()
     {

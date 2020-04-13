@@ -49,11 +49,14 @@ Class Pegawai extends REST_Controller{
         $pegawai->username = $this->post('username');   
         $pegawai->password = $this->post('password');
 
-        if ($result = $this->PegawaiModel->verify($pegawai)) { 
-            $response = ['id_pegawai' => $result['id_pegawai'], 'nama_pegawai' => $result['nama_pegawai'], 'role_pegawai' => $result['role_pegawai']];
+        $result=$this->PegawaiModel->verify($pegawai);
+        if ($result['error']==false) { 
+            $pgw=$result['msg'];
+            $response = ['id_pegawai' => $pgw['id_pegawai'], 'nama_pegawai' => $pgw['nama_pegawai'], 'role_pegawai' => $pgw['role_pegawai']];
             return $this->response($response);
         } else {
-            return $this->response('Failed');
+            // return $this->response(['msg'=>$result['msg']]);
+            return $this->response(['error_login'=>$result['msg']]);
         }
     }
 
@@ -100,9 +103,9 @@ Class Pegawai extends REST_Controller{
             ); 
         } 
         $validation->set_rules($rule); 
-        $this->form_validation->set_message('is_unique_pegawai','Username must be unique!');
+        $this->form_validation->set_message('is_unique_pegawai','Username telah dipakai');
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){

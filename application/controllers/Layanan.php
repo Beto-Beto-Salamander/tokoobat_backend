@@ -51,13 +51,15 @@ Class Layanan extends REST_Controller{
                 [ 
                     'field' => 'nama_layanan', 
                     'label' => 'nama_layanan', 
-                    'rules' => 'required' 
+                    'rules' => 'required|callback_is_unique_layanan' 
                 ]
             ); 
         } 
+        $this->form_validation->set_message('is_unique_layanan','Layanan sudah ada');
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            // return $this->returnData($this->form_validation->error_array(), true); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){
@@ -82,6 +84,11 @@ Class Layanan extends REST_Controller{
         $response = $this->LayananModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+
+    public function is_unique_layanan($nama_layanan)
+    {
+        return $this->LayananModel->is_unique_layanan($nama_layanan);
+    }
 
     private function verify_request()
     {

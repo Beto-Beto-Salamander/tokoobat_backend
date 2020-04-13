@@ -36,9 +36,9 @@ class HewanModel extends CI_Model
         $this->hwn_created_by = $request->hwn_created_by;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_hewan) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -51,9 +51,9 @@ class HewanModel extends CI_Model
             'hwn_edited_at' =>$now
         ]; 
         if($this->db->where('id_hewan',$id_hewan)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($request, $id_hewan){ 
@@ -66,9 +66,9 @@ class HewanModel extends CI_Model
             'hwn_deleted_by' =>$request->hwn_deleted_by
         ]; 
         if($this->db->where('id_hewan',$id_hewan)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }     
 } 
 ?>

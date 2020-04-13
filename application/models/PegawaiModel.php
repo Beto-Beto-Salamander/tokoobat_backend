@@ -58,9 +58,9 @@ class PegawaiModel extends CI_Model
         $this->password = md5($request->password);
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_pegawai) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -76,9 +76,9 @@ class PegawaiModel extends CI_Model
             'peg_edited_at' =>$now
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($id_pegawai){ 
@@ -90,18 +90,22 @@ class PegawaiModel extends CI_Model
             'peg_deleted_at' =>$now,
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }     
 
     public function verify($request){
         $pegawai = $this->db->select('*')->where(array('username' => $request->username,'password' => md5($request->password)))->get($this->table)->row_array();
         // if(!empty($pegawai) && password_verify($request->password , $pegawai['password'])) {
-    if(!empty($pegawai)){
-            return $pegawai;
+    if(!empty($this->db->select('*')->where(array('username' => $request->username))->get($this->table)->row_array())){
+            if(!empty($this->db->select('*')->where(array('username' => $request->username,'password' => md5($request->password)))->get($this->table)->row_array())){
+                return ['msg'=>$pegawai,'error'=>false];
+            }else{
+                return ['msg'=>'Password salah','error'=>true];
+            }
         } else {
-            return false;
+            return ['msg'=>'Username tidak ditemukan','error'=>true];
         }
     }
 

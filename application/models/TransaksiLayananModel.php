@@ -47,9 +47,9 @@ class TransaksiLayananModel extends CI_Model
         $this->translay_created_by = $request->translay_created_by; 
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_trans_layanan) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -64,9 +64,9 @@ class TransaksiLayananModel extends CI_Model
             'translay_edited_by' =>$$request->translay_edited_by
         ]; 
         if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($request,$id_trans_layanan){ 
@@ -79,9 +79,9 @@ class TransaksiLayananModel extends CI_Model
             'translay_deleted_by' =>$request->translay_deleted_by
         ]; 
         if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }  
 } 
 ?>

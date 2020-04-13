@@ -64,6 +64,7 @@ Class Produk extends REST_Controller{
     } 
 
     public function index_post($id = null){ 
+        $status = parent::HTTP_OK;
         $validation = $this->form_validation; 
         $rule = $this->ProdukModel->rules(); 
         if($id == null){ 
@@ -76,7 +77,7 @@ Class Produk extends REST_Controller{
                 [ 
                     'field' => 'nama_produk', 
                     'label' => 'nama_produk', 
-                    'rules' => 'required' 
+                    'rules' => 'required|callback_is_unique_produk' 
                 ], 
                 // [ 
                 //     'field' => 'foto_produk', 
@@ -106,9 +107,12 @@ Class Produk extends REST_Controller{
                 
             ); 
         } 
+        $this->form_validation->set_message('is_unique_produk','Produk sudah ada');
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
-            return $this->returnData($this->form_validation->error_array(), true); 
+            // return $this->returnData($this->form_validation->error_array(), true); 
+            // return $this->response(['message'=>$this->form_validation->error_array(), 'error'=>true, 'status'=>$status]); 
+            return $this->response($this->form_validation->error_array()); 
         }
 
         if($id == null){
@@ -122,7 +126,8 @@ Class Produk extends REST_Controller{
             $produk->min_stok  = $this->post('min_stok');
 
             $response = $this->ProdukModel->store($produk);
-            return $this->returnData($response['msg'], $response['error']); 
+            // return $this->returnData($response['msg'], $response['error']); 
+            return $this->response(['message'=>$response['msg'], 'error'=>$response['error'],'status'=>$status]); 
         }else{ 
             $produk = new ProdukData(); 
             $produk->id_supplier = $this->post('id_supplier');
@@ -134,7 +139,8 @@ Class Produk extends REST_Controller{
             $produk->min_stok  = $this->post('min_stok');
 
             $response = $this->ProdukModel->update($produk,$id); 
-            return $this->returnData($response['msg'], $response['error']);
+            // return $this->returnData($response['msg'], $response['error']);
+            return $this->response(['message'=>$response['msg'], 'error'=>$response['error'],'status'=>$status]);
         } 
        
         
@@ -154,6 +160,11 @@ Class Produk extends REST_Controller{
         $response['message']=$msg; 
         return $this->response($response); 
     } 
+
+    public function is_unique_produk($nama_produk)
+    {
+        return $this->ProdukModel->is_unique_produk($nama_produk);
+    }
 
     private function verify_request()
     {

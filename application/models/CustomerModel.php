@@ -43,9 +43,9 @@ class CustomerModel extends CI_Model
         $this->cust_created_by = $request->cust_created_by;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_customer) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -59,9 +59,9 @@ class CustomerModel extends CI_Model
             'cust_edited_at' =>$now
         ]; 
         if($this->db->where('id_customer',$id_customer)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($request, $id_customer){ 
@@ -74,9 +74,9 @@ class CustomerModel extends CI_Model
             'cust_deleted_at' =>$now
         ]; 
         if($this->db->where('id_customer',$id_customer)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }     
 
     public function verify($request){
@@ -86,13 +86,6 @@ class CustomerModel extends CI_Model
         } else {
             return false;
         }
-    }
-
-    public function verifyuser($email){
-        $where=['email'=>$email];
-        $update=['verified'=>1];
-        $this->db->where($where)->update($this->table,$update);
-            
     }
 } 
 ?>

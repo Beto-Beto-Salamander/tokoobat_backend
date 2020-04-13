@@ -9,7 +9,7 @@ class JenisHewanModel extends CI_Model
         [ 
             'field' => 'jenis', 
             'label' => 'jenis', 
-            'rules' => 'required' 
+            'rules' => 'required|callback_is_unique_jenis' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 
@@ -18,9 +18,9 @@ class JenisHewanModel extends CI_Model
         $this->jenis = $request->jenis;
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal Tambah','error'=>true]; 
     } 
     public function update($request,$id_jenis) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -30,9 +30,9 @@ class JenisHewanModel extends CI_Model
             'jns_edited_at' =>$now
         ]; 
         if($this->db->where('id_jenis',$id_jenis)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($id_jenis){ 
@@ -44,9 +44,16 @@ class JenisHewanModel extends CI_Model
             'jns_deleted_at' =>$now
         ]; 
         if($this->db->where('id_jenis',$id_jenis)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }     
+
+    public function is_unique_jenis($jenis){
+        if (empty($this->db->select('*')->where(array('jenis' => $jenis,'jns_deleted_at'=>null))->get($this->table)->row())) 
+        return true;
+        else
+        return false;
+    }
 } 
 ?>

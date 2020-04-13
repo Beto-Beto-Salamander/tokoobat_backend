@@ -47,9 +47,9 @@ class TransaksiProdukModel extends CI_Model
         $this->transproduk_created_by = $request->transproduk_created_by; 
 
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
     public function update($request,$id_trans_produk) { 
         date_default_timezone_set('Asia/Jakarta');
@@ -64,9 +64,9 @@ class TransaksiProdukModel extends CI_Model
             'transproduk_edited_by' =>$$request->transproduk_edited_by
         ]; 
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $updateData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
     public function destroy($request,$id_trans_produk){ 
@@ -79,9 +79,9 @@ class TransaksiProdukModel extends CI_Model
             'transproduk_deleted_by' =>$$request->transproduk_deleted_by
         ]; 
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $deleteData)){ 
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Gagal hapus','error'=>true];
     }  
 } 
 ?>
