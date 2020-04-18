@@ -73,7 +73,6 @@ Class Pengadaan extends REST_Controller{
         if($id == null){
             $pengadaan = new PengadaanData(); 
             $pengadaan->tgl_pengadaan = $this->post('tgl_pengadaan'); 
-            $pengadaan->total_pengadaan  = $this->post('total_pengadaan'); 
             $pengadaan->status_pengadaan = $this->post('status_pengadaan');
 
             $response = $this->PengadaanModel->store($pengadaan);
@@ -81,7 +80,6 @@ Class Pengadaan extends REST_Controller{
         }else{ 
             $pengadaan = new PengadaanData(); 
             $pengadaan->tgl_pengadaan = $this->post('tgl_pengadaan'); 
-            $pengadaan->total_pengadaan  = $this->post('total_pengadaan'); 
             $pengadaan->status_pengadaan = $this->post('status_pengadaan');  
 
             $response = $this->PengadaanModel->update($pengadaan,$id); 
@@ -141,7 +139,5 @@ Class Pengadaan extends REST_Controller{
 } 
 Class PengadaanData{ 
     public $tgl_pengadaan; 
-    public $total_pengadaan; 
     public $status_pengadaan;
-    public $adaan_deleted_at; 
 }

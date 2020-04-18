@@ -23,7 +23,6 @@ class PengadaanModel extends CI_Model
     
     public function store($request) { 
         $this->tgl_pengadaan = $request->tgl_pengadaan; 
-        $this->total_pengadaan = $request->total_pengadaan; 
         $this->status_pengadaan = $request->status_pengadaan;
 
         if($this->db->insert($this->table, $this)){ 
@@ -36,7 +35,6 @@ class PengadaanModel extends CI_Model
         $now = date("Y-m-d H:i:s");
         $updateData = [
             'tgl_pengadaan' =>$request->tgl_pengadaan,
-            'total_pengadaan' =>$request->total_pengadaan,
             'status_pengadaan' =>$request->status_pengadaan,
             'adaan_edited_at' =>$now
         ]; 

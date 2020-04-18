@@ -90,6 +90,16 @@ Class DetailPengadaan extends REST_Controller{
         return $this->response($response); 
     } 
 
+    private function latest_get(){
+        $this->db->select('id_pengadaan');
+        $this->db->from('pengadaan');
+        $this->db->where('pengadaan',array('tgl_pengadaan' => 'max(tgl_pengadaan)'));
+    }
+
+    // private function setTotal(){
+    //     sum()
+    // }
+
     private function verify_request()
     {
     // Get all the headers
