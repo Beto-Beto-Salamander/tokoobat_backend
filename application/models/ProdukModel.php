@@ -20,7 +20,7 @@ class ProdukModel extends CI_Model
         [ 
             'field' => 'nama_produk', 
             'label' => 'nama_produk', 
-            'rules' => 'required|callback_is_unique_produk' 
+            'rules' => 'required' 
         ], 
         // [ 
         //     'field' => 'foto_produk', 

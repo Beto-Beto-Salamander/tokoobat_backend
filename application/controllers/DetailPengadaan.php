@@ -34,11 +34,6 @@ Class DetailPengadaan extends REST_Controller{
         if($id == null){ 
             array_push($rule,
                 [ 
-                    'field' => 'id_pengadaan', 
-                    'label' => 'id_pengadaan', 
-                    'rules' => 'required' 
-                ], 
-                [ 
                     'field' => 'id_produk', 
                     'label' => 'id_produk', 
                     'rules' => 'required' 

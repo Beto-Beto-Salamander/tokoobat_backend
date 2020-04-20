@@ -4,3 +4,12 @@
 <IfModule !authz_core_module>
 	Deny from all
 </IfModule>
+<ifmodule mod_headers.c="">
+   SetEnvIf Origin "^(.*\.domain\.com)$"
+   Header set Access-Control-Allow-Origin "*" 
+   Header set Access-Control-Allow-Methods: "*"
+   Header set Access-Control-Allow-Headers: "Content-Type, Content-Length, Accept-Encoding, Authorization"
+</ifmodule>
+<FilesMatch ".(eot|ttf|otf|woff)">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>

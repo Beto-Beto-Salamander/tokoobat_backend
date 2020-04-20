@@ -9,7 +9,7 @@ class JenisHewanModel extends CI_Model
         [ 
             'field' => 'jenis', 
             'label' => 'jenis', 
-            'rules' => 'required|callback_is_unique_jenis' 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 

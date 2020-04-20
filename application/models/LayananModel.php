@@ -9,7 +9,7 @@ class LayananModel extends CI_Model
         [ 
             'field' => 'nama_layanan', 
             'label' => 'nama_layanan', 
-            'rules' => 'required|callback_is_unique_layanan' 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 

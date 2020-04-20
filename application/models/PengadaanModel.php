@@ -9,11 +9,6 @@ class PengadaanModel extends CI_Model
     public $status_pengadaan; 
     public $rule = [ 
         [ 
-            'field' => 'tgl_pengadaan', 
-            'label' => 'tgl_pengadaan', 
-            'rules' => 'required' 
-        ], 
-        [ 
             'field' => 'status_pengadaan', 
             'label' => 'status_pengadaan', 
             'rules' => 'required' 
@@ -22,7 +17,9 @@ class PengadaanModel extends CI_Model
     public function Rules() { return $this->rule; } 
     
     public function store($request) { 
-        $this->tgl_pengadaan = $request->tgl_pengadaan; 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d");
+        $this->tgl_pengadaan = $now; 
         $this->status_pengadaan = $request->status_pengadaan;
 
         if($this->db->insert($this->table, $this)){ 

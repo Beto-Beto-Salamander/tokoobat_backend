@@ -10,11 +10,6 @@ class DetailPengadaanModel extends CI_Model
     public $subtotal_pengadaan; 
     public $rule = [ 
         [ 
-            'field' => 'id_pengadaan', 
-            'label' => 'id_pengadaan', 
-            'rules' => 'required' 
-        ], 
-        [ 
             'field' => 'id_produk', 
             'label' => 'id_produk', 
             'rules' => 'required' 

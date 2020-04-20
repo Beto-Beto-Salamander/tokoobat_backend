@@ -37,7 +37,7 @@ class PegawaiModel extends CI_Model
         [ 
             'field' => 'username', 
             'label' => 'username', 
-            'rules' => 'required|callback_is_unique_pegawai' 
+            'rules' => 'required' 
         ], 
         [ 
             'field' => 'password', 

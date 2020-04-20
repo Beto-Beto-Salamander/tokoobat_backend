@@ -9,7 +9,7 @@ class UkuranHewanModel extends CI_Model
         [ 
             'field' => 'ukuran', 
             'label' => 'ukuran', 
-            'rules' => 'required|callback_is_unique_ukuran' 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 

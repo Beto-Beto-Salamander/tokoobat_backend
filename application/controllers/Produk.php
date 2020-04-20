@@ -63,6 +63,20 @@ Class Produk extends REST_Controller{
         return $this->returnData($data, false); 
     } 
 
+    public function bysupplier_get($id){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        $this->db->select('id_produk, id_supplier, nama_produk, harga_beli_produk, stok, min_stok');
+        $this->db->from('produk');
+        $this->db->where(array('id_supplier'=>$id,'produk_deleted_at'=>null));
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
+    } 
+
     public function index_post($id = null){ 
         $status = parent::HTTP_OK;
         $validation = $this->form_validation; 

@@ -49,16 +49,6 @@ Class Pengadaan extends REST_Controller{
         if($id == null){ 
             array_push($rule,
                 [ 
-                    'field' => 'tgl_pengadaan', 
-                    'label' => 'tgl_pengadaan', 
-                    'rules' => 'required' 
-                ], 
-                [ 
-                    'field' => 'total_pengadaan', 
-                    'label' => 'total_pengadaan', 
-                    'rules' => 'required' 
-                ],
-                [ 
                     'field' => 'status_pengadaan', 
                     'label' => 'status_pengadaan', 
                     'rules' => 'required' 
@@ -72,7 +62,6 @@ Class Pengadaan extends REST_Controller{
 
         if($id == null){
             $pengadaan = new PengadaanData(); 
-            $pengadaan->tgl_pengadaan = $this->post('tgl_pengadaan'); 
             $pengadaan->status_pengadaan = $this->post('status_pengadaan');
 
             $response = $this->PengadaanModel->store($pengadaan);
