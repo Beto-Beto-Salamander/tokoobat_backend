@@ -27,14 +27,23 @@ class PengadaanModel extends CI_Model
         } 
         return ['msg'=>'Gagal tambah','error'=>true]; 
     } 
+    
     public function update($request,$id_pengadaan) { 
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s");
-        $updateData = [
-            'tgl_pengadaan' =>$request->tgl_pengadaan,
-            'status_pengadaan' =>$request->status_pengadaan,
-            'adaan_edited_at' =>$now
-        ]; 
+        if(!empty($request->tgl_pengadaan)){
+            $updateData = [
+                'tgl_pengadaan' =>$request->tgl_pengadaan,
+                'status_pengadaan' =>$request->status_pengadaan,
+                'adaan_edited_at' =>$now
+            ]; 
+        }else{
+            $updateData = [
+                'status_pengadaan' =>$request->status_pengadaan,
+                'adaan_edited_at' =>$now
+            ]; 
+        }
+        
         if($this->db->where('id_pengadaan',$id_pengadaan)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil edit','error'=>false]; 
         } 

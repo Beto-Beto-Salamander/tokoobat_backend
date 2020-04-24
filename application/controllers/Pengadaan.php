@@ -20,12 +20,113 @@ Class Pengadaan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('pengadaan',array('adaan_deleted_at'=>null))->result(), false);
+            $this->db->distinct();
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, (select count(id_pengadaan) from detail_pengadaan where id_pengadaan=p.id_pengadaan) as jumlah_jenis, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.adaan_deleted_at'=>null));
+            $this->db->order_by('p.tgl_pengadaan','DESC');
         }   
         else{
-            return $this->returnData($this->db->get_where('pengadaan',array('id_pengadaan' => $id,'adaan_deleted_at'=>null))->result(), false);
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.id_pengadaan'=>$id,'p.adaan_deleted_at'=>null));
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
+    } 
+
+    public function pending_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            $this->db->distinct();
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.adaan_deleted_at'=>null, 'p.status_pengadaan'=>'Pending'));
+            $this->db->order_by('p.tgl_pengadaan','DESC');
+        }   
+        else{
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.id_pengadaan'=>$id,'p.adaan_deleted_at'=>null,'p.status_pengadaan'=>'Pending'));
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
+    } 
+
+    public function belumsampai_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            $this->db->distinct();
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.adaan_deleted_at'=>null, 'p.status_pengadaan'=>'Belum Sampai'));
+            $this->db->order_by('p.tgl_pengadaan','DESC');
+        }   
+        else{
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.id_pengadaan'=>$id,'p.adaan_deleted_at'=>null,'p.status_pengadaan'=>'Belum Sampai'));
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
+    } 
+
+    public function sampai_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            $this->db->distinct();
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.adaan_deleted_at'=>null, 'p.status_pengadaan'=>'Sampai'));
+            $this->db->order_by('p.tgl_pengadaan','DESC');
+        }   
+        else{
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.id_pengadaan'=>$id,'p.adaan_deleted_at'=>null,'p.status_pengadaan'=>'Sampai'));
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
 
     public function log_get($id=null){ 
@@ -35,12 +136,27 @@ Class Pengadaan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->order_by('adaan_deleted_at','ASC')->get_where('pengadaan')->result(), false);
+            $this->db->distinct();
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier,
+                                p.adaan_created_at, p.adaan_edited_at, p.adaan_deleted_at');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->order_by('p.tgl_pengadaan','DESC');
         }   
         else{
-            return $this->returnData($this->db->order_by('adaan_deleted_at','ASC')->get_where('pengadaan',array('id_pengadaan' => $id))->result(), false);
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier,
+                                p.adaan_created_at, p.adaan_edited_at, p.adaan_deleted_at');
+            $this->db->from('pengadaan as p');
+            $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
+            $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
+            $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
+            $this->db->where(array('p.id_pengadaan'=>$id));
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
 
     public function index_post($id = null){ 
