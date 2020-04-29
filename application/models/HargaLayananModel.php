@@ -37,7 +37,7 @@ class HargaLayananModel extends CI_Model
         $this->id_layanan = $request->id_layanan;
         $this->id_jenis = $request->id_jenis;
         $this->id_ukuran = $request->id_ukuran;
-        $this->id_harga_layanan = $request->id_harga_layanan;
+        $this->harga_layanan = $request->harga_layanan;
 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil tambah','error'=>false];
@@ -51,7 +51,7 @@ class HargaLayananModel extends CI_Model
             'id_layanan' => $request->id_layanan,
             'id_jenis' => $request->id_jenis,
             'id_ukuran' => $request->id_ukuran,
-            'id_harga_layanan' => $request->id_harga_layanan,
+            'harga_layanan' => $request->harga_layanan,
             'harga_deleted_at' =>$now
         ]; 
         if($this->db->where('id_harga_layanan',$id_harga_layanan)->update($this->table, $updateData)){ 

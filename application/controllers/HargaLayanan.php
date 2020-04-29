@@ -177,5 +177,4 @@ Class HargaLayananData{
     public $id_jenis; 
     public $id_ukuran; 
     public $harga_layanan;
-    public $harga_deleted_at;
 }
