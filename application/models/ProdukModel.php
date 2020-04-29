@@ -1,4 +1,6 @@
 <?php 
+require_once 'Firebase.php';
+require_once 'Push.php'; 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 class ProdukModel extends CI_Model 
 { 
@@ -105,7 +107,11 @@ class ProdukModel extends CI_Model
         }
         
         if($this->db->where('id_produk',$id_produk)->update($this->table, $updateData)){ 
-            return ['msg'=>'Berhasil edit','error'=>false]; 
+            $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
+            if($getProduk->stok<=$getProduk->min_stok)
+                $this->sendNotif($getProduk->nama_produk.' hampir habis','Stok tinggal '.$getProduk->stok.' buah');
+            // return ['msg'=>'Berhasil edit','error'=>false]; 
+            return ['msg'=>'Berhasil edit','error'=>false];
         } 
         return ['msg'=>'Gagal edit','error'=>true]; 
     } 
@@ -166,5 +172,39 @@ class ProdukModel extends CI_Model
             return "default.jpg";
         }
     }
+
+    public function sendNotif($title, $message){ 
+        //creating a new push
+        $push = null; 
+        // //first check if the push has an image with it
+        // if($this->post('image')){
+        //     $push = new Push(
+        //         $this->post('title'),
+        //         $this->post('message'),
+        //         $this->post('image')
+        //     );
+        // }else{
+        //     //if the push don't have an image give null in place of image
+        //     $push = new Push(
+        //         $this->post('title'),
+        //         $this->post('message'),
+        //         null
+        //     );
+        // }
+        $push = new Push($title,$message,null); 
+
+        //getting the push from push object
+        $mPushNotification = $push->getPush(); 
+
+        //getting the token from database object 
+        // $devicetoken = $db->getAllTokens();
+        $devicetoken = ['csOMoVjpQSmQCqVO4DjOie:APA91bGkz3D13Rrj8n6BLbz8KRTEPhM75ZjSF_yl3EbZ3_u1b-om7_7T5TM__hVwPP83i4_1pQuAcToP5NZHrLTyrSWhuM8bE1eIJH78fuEhAgtbli8RabjWCoXVFb9PaJ_spy6Mz3CN'];
+
+        //creating firebase class object 
+        $firebase = new Firebase(); 
+
+        //sending push notification and displaying result 
+        return $firebase->send($devicetoken, $mPushNotification);
+    } 
 } 
 ?>

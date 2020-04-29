@@ -28,7 +28,7 @@ Class Produk extends REST_Controller{
             // return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_prodk, p.harga_jual_produk, p.stok, p.min_stok');
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok');
             $this->db->from('produk as p');
             $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
             $this->db->where(array('id_produk' => $id,'produk_deleted_at'=>null));

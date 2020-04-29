@@ -16,7 +16,6 @@ class Firebase{
     private function sendPushNotification($fields) {
          
         //importing the constant files
-        require_once 'Config.php';
         
         //firebase server url to send the curl request
         $url = 'https://fcm.googleapis.com/fcm/send';

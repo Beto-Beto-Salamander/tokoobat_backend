@@ -1,21 +1,27 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class NotificationModel extends CI_Model 
+class DeviceModel extends CI_Model 
 { 
     private $table = 'device'; 
     public $id_device; 
-    public $role;
+    public $role; 
     public $token; 
     public $rule = [ 
         [ 
+            'field' => 'role', 
+            'label' => 'role', 
+            'rules' => 'required' 
+        ],
+        [ 
             'field' => 'token', 
             'label' => 'token', 
-            'rules' => '' 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 
     
     public function store($request) { 
+        $this->role = $request->role;
         $this->token = $request->token;
 
         if($this->db->insert($this->table, $this)){ 
@@ -25,6 +31,7 @@ class NotificationModel extends CI_Model
     } 
     public function update($request,$id_device) { 
         $updateData = [
+            'role' =>$request->role,
             'token' =>$request->token
         ]; 
         if($this->db->where('id_device',$id_device)->update($this->table, $updateData)){ 
@@ -41,12 +48,5 @@ class NotificationModel extends CI_Model
         } 
         return ['msg'=>'Gagal hapus','error'=>true];
     }     
-
-    public function is_unique_device($token){
-        if (empty($this->db->select('*')->where(array('token' => $token,'lay_deleted_at'=>null))->get($this->table)->row())) 
-        return true;
-        else
-        return false;
-    }
 } 
 ?>
