@@ -1,9 +1,10 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class DeviceModel extends CI_Model 
+class NotificationModel extends CI_Model 
 { 
     private $table = 'device'; 
     public $id_device; 
+    public $role;
     public $token; 
     public $rule = [ 
         [ 
