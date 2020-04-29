@@ -6,7 +6,7 @@ class HewanModel extends CI_Model
     public $id_hewan; 
     public $id_customer; 
     public $nama_hewan; 
-    public $tgllahir_hewan; 
+    public $tgl_lahir_hewan; 
     public $hwn_created_by;
     public $hwn_edited_by;
     public $hwn_deleted_by;
@@ -22,8 +22,8 @@ class HewanModel extends CI_Model
             'rules' => 'required' 
         ], 
         [ 
-            'field' => 'tgllahir_hewan', 
-            'label' => 'tgllahir_hewan', 
+            'field' => 'tgl_lahir_hewan', 
+            'label' => 'tgl_lahir_hewan', 
             'rules' => 'required' 
         ], 
     ]; 
@@ -32,7 +32,7 @@ class HewanModel extends CI_Model
     public function store($request) { 
         $this->id_customer = $request->id_customer;
         $this->nama_hewan = $request->nama_hewan; 
-        $this->tgllahir_hewan = $request->tgllahir_hewan; 
+        $this->tgl_lahir_hewan = $request->tgl_lahir_hewan; 
         $this->hwn_created_by = $request->hwn_created_by;
 
         if($this->db->insert($this->table, $this)){ 
@@ -46,7 +46,7 @@ class HewanModel extends CI_Model
         $updateData = [
             'id_customer' =>$request->id_customer,
             'nama_hewan' =>$request->nama_hewan,
-            'tgllahir_hewan' =>$request->tgllahir_hewan,
+            'tgl_lahir_hewan' =>$request->tgl_lahir_hewan,
             'hwn_edited_by' =>$request->hwn_edited_by,
             'hwn_edited_at' =>$now
         ]; 
