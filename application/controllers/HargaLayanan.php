@@ -20,12 +20,24 @@ Class HargaLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('harga_layanan',array('harga_deleted_at'=>null))->result(), false);
+            $this->db->select('h.id_harga_layanan, h.id_layanan, l.nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan');
+            $this->db->from('harga_layanan as h');
+            $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
+            $this->db->join('ukuran_hewan as u', 'h.id_ukuran = u.id_ukuran');
+            $this->db->where(array('h.harga_deleted_at'=>null));
         }   
         else{
-            return $this->returnData($this->db->get_where('harga_layanan',array('id_harga_layanan' => $id,'harga_deleted_at'=>null))->result(), false);
+            $this->db->select('h.id_harga_layanan, h.id_layanan, l.nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan');
+            $this->db->from('harga_layanan as h');
+            $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
+            $this->db->join('jenis as j', 'h.id_jenis = j.id_jenis');
+            $this->db->join('ukuran as u', 'h.id_ukuran = u.id_ukuran');
+            $this->db->where(array('h.id_harga_layanan'=>$id,'h.harga_deleted_at'=>null));
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);
     } 
 
     public function log_get($id=null){ 
@@ -35,12 +47,25 @@ Class HargaLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('harga_layanan')->result(), false);
+            $this->db->select('h.id_harga_layanan, h.id_layanan, l.nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan,
+                                h.harga_created_at, h.harga_deleted_at, h.harga_edited_at');
+            $this->db->from('harga_layanan as h');
+            $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
+            $this->db->join('ukuran_hewan as u', 'h.id_ukuran = u.id_ukuran');
         }   
         else{
-            return $this->returnData($this->db->get_where('harga_layanan',array('id_harga_layanan' => $id))->result(), false);
+            $this->db->select('h.id_harga_layanan, h.id_layanan, l.nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan,
+                                h.harga_created_at, h.harga_deleted_at, h.harga_edited_at');
+            $this->db->from('harga_layanan as h');
+            $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
+            $this->db->join('ukuran_hewan as u', 'h.id_ukuran = u.id_ukuran');
+            $this->db->where(array('h.id_harga_layanan'=>$id));
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);
     } 
 
     public function index_post($id = null){ 
