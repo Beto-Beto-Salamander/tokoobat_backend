@@ -15,7 +15,7 @@ class DeviceModel extends CI_Model
         [ 
             'field' => 'token', 
             'label' => 'token', 
-            'rules' => 'required' 
+            'rules' => 'required|is_unique[device.token]' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 

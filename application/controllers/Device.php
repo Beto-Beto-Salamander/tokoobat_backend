@@ -41,7 +41,7 @@ Class Device extends REST_Controller{
                 [ 
                     'field' => 'token', 
                     'label' => 'token', 
-                    'rules' => 'required' 
+                    'rules' => 'required|is_unique[device.token]' 
                 ]
             ); 
         } 

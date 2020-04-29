@@ -154,7 +154,7 @@ Class Produk extends REST_Controller{
 
             $response = $this->ProdukModel->update($produk,$id); 
             // return $this->returnData($response['msg'], $response['error']);
-            return $this->response(['message'=>$response['msg'], 'error'=>$response['error'],'status'=>$status]);
+            return $this->response($response);
         } 
        
         
