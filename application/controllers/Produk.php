@@ -160,6 +160,15 @@ Class Produk extends REST_Controller{
         
     }
 
+    public function pengadaanproduk_post($id){
+        $produk = new ProdukData(); 
+        $produk->stok = $this->post('stok'); 
+
+        $response = $this->ProdukModel->pengadaanproduk($produk,$id); 
+        // return $this->returnData($response['msg'], $response['error']);
+        return $this->response(['message'=>$response['msg'], 'error'=>$response['error']]);
+    }
+
     public function delete_post($id = null){ 
         $produk = new ProdukData(); 
 

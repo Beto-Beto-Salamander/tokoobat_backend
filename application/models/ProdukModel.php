@@ -110,6 +110,17 @@ class ProdukModel extends CI_Model
         return ['msg'=>'Gagal edit','error'=>true]; 
     } 
 
+    public function pengadaanproduk($request,$id){
+        $this->stok = $request->stok;
+        $this->db->set('stok', 'stok+'.$this->stok, FALSE);
+        $this->db->where('id_produk', $id);
+        
+        if($this->db->update($this->table)){ 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
+        } 
+        return ['msg'=>'Gagal edit','error'=>true]; 
+    }
+
     public function destroy($id_produk){ 
         $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
         if (empty($getProduk)) 

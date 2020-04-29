@@ -61,7 +61,6 @@ Class DetailPengadaan extends REST_Controller{
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_pengadaan = new DetailPengadaanData(); 
-            $detail_pengadaan->id_pengadaan = $this->post('id_pengadaan'); 
             $detail_pengadaan->id_produk  = $this->post('id_produk'); 
             $detail_pengadaan->jml_pengadaan_produk = $this->post('jml_pengadaan_produk');  
 
@@ -72,7 +71,7 @@ Class DetailPengadaan extends REST_Controller{
         
     } 
 
-    public function delete_post($id = null){ 
+    public function index_delete($id = null){ 
 
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 

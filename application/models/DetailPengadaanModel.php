@@ -29,7 +29,12 @@ class DetailPengadaanModel extends CI_Model
         $this->db->where('id_produk='.$request->id_produk);
         $query = $this->db->get();
         $total = $query->row();
-        $this->id_pengadaan = $latest->id_pengadaan; 
+
+        if($request->id_pengadaan==0)
+            $this->id_pengadaan = $latest->id_pengadaan; 
+        else
+            $this->id_pengadaan = $request->id_pengadaan; 
+
         $this->id_produk = $request->id_produk; 
         $this->jml_pengadaan_produk = $request->jml_pengadaan_produk;
         $this->subtotal_pengadaan = $total->harga;
@@ -49,7 +54,6 @@ class DetailPengadaanModel extends CI_Model
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s");
         $updateData = [
-            'id_pengadaan' =>$request->id_pengadaan,
             'id_produk' =>$request->id_produk,
             'jml_pengadaan_produk' =>$request->jml_pengadaan_produk,
             'subtotal_pengadaan' =>$total->harga
@@ -62,17 +66,22 @@ class DetailPengadaanModel extends CI_Model
     } 
 
     public function destroy($id_detail_pengadaan){ 
-        if (empty($this->db->select('*')->where(array('id_detail_pengadaan' => $id_detail_pengadaan))->get($this->table)->row())) 
-        return ['msg'=>'Id Not Found','error'=>true];
+        $dataDetail=$this->db->select('*')->where(array('id_detail_pengadaan' => $id_detail_pengadaan))->get($this->table)->row();
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s"); 
         $deleteData = [
-            'adaan_deleted_at' =>$now
+            'adaan_edited_at' =>$now
         ]; 
-        if($this->db->where('id_detail_pengadaan',$id_detail_pengadaan)->update($this->table, $deleteData)){ 
+
+        if (empty($dataDetail)) 
+            return ['msg'=>'Id tidak ditemukan','error'=>true]; 
+
+        if($this->db->delete($this->table, array('id_detail_pengadaan' => $id_detail_pengadaan))){ 
+            $this->db->where('id_pengadaan',$dataDetail->id_pengadaan)->update('pengadaan', $deleteData);
+            $this->setTotalPengadaan($dataDetail->id_pengadaan);
             return ['msg'=>'Success','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true];
+        return ['msg'=>'Failed','error'=>true]; 
     }  
 
     private function setTotalPengadaan($id_pengadaan){

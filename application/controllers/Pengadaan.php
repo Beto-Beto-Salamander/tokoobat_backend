@@ -28,6 +28,7 @@ Class Pengadaan extends REST_Controller{
             $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
             $this->db->where(array('p.adaan_deleted_at'=>null));
             $this->db->order_by('p.tgl_pengadaan','DESC');
+            // $this->db->group_by('p.id_pengadaan');
         }   
         else{
             $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
@@ -50,7 +51,7 @@ Class Pengadaan extends REST_Controller{
         // }
         if($id==null){
             $this->db->distinct();
-            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan,(select count(id_pengadaan) from detail_pengadaan where id_pengadaan=p.id_pengadaan) as jumlah_jenis, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
             $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
@@ -79,7 +80,7 @@ Class Pengadaan extends REST_Controller{
         // }
         if($id==null){
             $this->db->distinct();
-            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, (select count(id_pengadaan) from detail_pengadaan where id_pengadaan=p.id_pengadaan) as jumlah_jenis, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
             $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
@@ -108,7 +109,7 @@ Class Pengadaan extends REST_Controller{
         // }
         if($id==null){
             $this->db->distinct();
-            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, (select count(id_pengadaan) from detail_pengadaan where id_pengadaan=p.id_pengadaan) as jumlah_jenis, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
             $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
@@ -137,7 +138,7 @@ Class Pengadaan extends REST_Controller{
         // }
         if($id==null){
             $this->db->distinct();
-            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier,
+            $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, (select count(id_pengadaan) from detail_pengadaan where id_pengadaan=p.id_pengadaan) as jumlah_jenis, p.status_pengadaan, s.id_supplier, s.nama_supplier,
                                 p.adaan_created_at, p.adaan_edited_at, p.adaan_deleted_at');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
