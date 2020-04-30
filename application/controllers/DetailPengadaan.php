@@ -25,8 +25,7 @@ Class DetailPengadaan extends REST_Controller{
         $this->db->where(array('dp.id_pengadaan'=>$id));
         $query=$this->db->get();
         $data=$query->result_array();
-        return $this->returnData($data, false); 
-            
+        return $this->returnData($data, false);     
     } 
 
     public function index_post($id = null){ 
