@@ -59,8 +59,8 @@ Class Hewan extends REST_Controller{
                     'rules' => 'required' 
                 ], 
                 [ 
-                    'field' => 'tgllahir_hewan', 
-                    'label' => 'tgllahir_hewan', 
+                    'field' => 'tgl_lahir_hewan', 
+                    'label' => 'tgl_lahir_hewan', 
                     'rules' => 'required' 
                 ]
             ); 
@@ -74,7 +74,7 @@ Class Hewan extends REST_Controller{
             $hewan = new HewanData(); 
             $hewan->id_customer = $this->post('id_customer');
             $hewan->nama_hewan = $this->post('nama_hewan'); 
-            $hewan->tgllahir_hewan = $this->post('tgllahir_hewan');
+            $hewan->tgl_lahir_hewan = $this->post('tgl_lahir_hewan');
             $hewan->hwn_created_by = $this->post('hwn_created_by'); 
 
             $response = $this->HewanModel->store($hewan);
@@ -83,7 +83,7 @@ Class Hewan extends REST_Controller{
             $hewan = new HewanData(); 
             $hewan->id_customer = $this->post('id_customer'); 
             $hewan->nama_hewan = $this->post('nama_hewan'); 
-            $hewan->tgllahir_hewan = $this->post('tgllahir_hewan');
+            $hewan->tgl_lahir_hewan = $this->post('tgl_lahir_hewan');
             $hewan->hwn_edited_by = $this->post('hwn_edited_by');
 
             $response = $this->HewanModel->update($hewan,$id); 
@@ -141,10 +141,11 @@ Class Hewan extends REST_Controller{
         }
     }
 } 
+
 Class HewanData{ 
     public $id_customer;
     public $nama_hewan; 
-    public $tgllahir_hewan;
+    public $tgl_lahir_hewan;
     public $hwn_deleted_at; 
     public $hwn_created_by; 
     public $hwn_edited_by;
