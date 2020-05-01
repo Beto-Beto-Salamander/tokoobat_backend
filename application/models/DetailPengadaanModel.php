@@ -45,7 +45,7 @@ class DetailPengadaanModel extends CI_Model
         $this->satuan = $request->satuan;
         $this->subtotal_pengadaan = $total->harga;
         if($this->db->insert($this->table, $this)){ 
-            $this->setTotalPengadaan($latest->id_pengadaan);
+            $this->setTotalPengadaan($this->id_pengadaan);
             return ['msg'=>'Success','error'=>false];
         } 
         return ['msg'=>'Failed','error'=>true]; 
