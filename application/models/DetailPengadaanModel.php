@@ -15,6 +15,11 @@ class DetailPengadaanModel extends CI_Model
             'rules' => 'required' 
         ], 
         [ 
+            'field' => 'satuan', 
+            'label' => 'satuan', 
+            'rules' => 'required' 
+        ],
+        [ 
             'field' => 'jml_pengadaan_produk', 
             'label' => 'jml_pengadaan_produk', 
             'rules' => 'required' 
@@ -37,6 +42,7 @@ class DetailPengadaanModel extends CI_Model
 
         $this->id_produk = $request->id_produk; 
         $this->jml_pengadaan_produk = $request->jml_pengadaan_produk;
+        $this->satuan = $request->satuan;
         $this->subtotal_pengadaan = $total->harga;
         if($this->db->insert($this->table, $this)){ 
             $this->setTotalPengadaan($latest->id_pengadaan);
@@ -56,6 +62,7 @@ class DetailPengadaanModel extends CI_Model
         $updateData = [
             'id_produk' =>$request->id_produk,
             'jml_pengadaan_produk' =>$request->jml_pengadaan_produk,
+            'satuan' =>$request->satuan,
             'subtotal_pengadaan' =>$total->harga
         ]; 
         if($this->db->where('id_detail_pengadaan',$id_detail_pengadaan)->update($this->table, $updateData)){ 

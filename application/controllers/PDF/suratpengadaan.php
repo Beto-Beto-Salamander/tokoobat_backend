@@ -92,7 +92,7 @@ Class SuratPengadaan extends CI_Controller{
                     {
                         $i++;
                         $pdf->Cell(50,10,$loop->nama_produk,1,0,'L');
-                        $pdf->Cell(50,10,'SATUAN',1,0,'L');
+                        $pdf->Cell(50,10,$row->satuan,1,0,'L');
                         $pdf->Cell(50,10,$row->jml_pengadaan_produk,1,1,'C');
                     } 
                 }

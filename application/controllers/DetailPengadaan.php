@@ -19,7 +19,7 @@ Class DetailPengadaan extends REST_Controller{
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
-        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, dp.jml_pengadaan_produk, dp.subtotal_pengadaan');
+        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, dp.jml_pengadaan_produk, dp.satuan, dp.subtotal_pengadaan');
         $this->db->from('detail_pengadaan as dp');
         $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
         $this->db->where(array('dp.id_pengadaan'=>$id));
@@ -38,6 +38,12 @@ Class DetailPengadaan extends REST_Controller{
                     'label' => 'id_produk', 
                     'rules' => 'required' 
                 ],
+                
+                [ 
+                    'field' => 'satuan', 
+                    'label' => 'satuan', 
+                    'rules' => 'required' 
+                ],
                 [ 
                     'field' => 'jml_pengadaan_produk', 
                     'label' => 'jml_pengadaan_produk', 
@@ -54,6 +60,7 @@ Class DetailPengadaan extends REST_Controller{
             $detail_pengadaan = new DetailPengadaanData(); 
             $detail_pengadaan->id_pengadaan = $this->post('id_pengadaan'); 
             $detail_pengadaan->id_produk  = $this->post('id_produk'); 
+            $detail_pengadaan->satuan  = $this->post('satuan'); 
             $detail_pengadaan->jml_pengadaan_produk = $this->post('jml_pengadaan_produk');
 
             $response = $this->DetailPengadaanModel->store($detail_pengadaan);
@@ -61,6 +68,7 @@ Class DetailPengadaan extends REST_Controller{
         }else{ 
             $detail_pengadaan = new DetailPengadaanData(); 
             $detail_pengadaan->id_produk  = $this->post('id_produk'); 
+            $detail_pengadaan->satuan  = $this->post('satuan'); 
             $detail_pengadaan->jml_pengadaan_produk = $this->post('jml_pengadaan_produk');  
 
             $response = $this->DetailPengadaanModel->update($detail_pengadaan,$id); 
@@ -83,16 +91,6 @@ Class DetailPengadaan extends REST_Controller{
         $response['message']=$msg; 
         return $this->response($response); 
     } 
-
-    private function latest_get(){
-        $this->db->select('id_pengadaan');
-        $this->db->from('pengadaan');
-        $this->db->where('pengadaan',array('tgl_pengadaan' => 'max(tgl_pengadaan)'));
-    }
-
-    // private function setTotal(){
-    //     sum()
-    // }
 
     private function verify_request()
     {
