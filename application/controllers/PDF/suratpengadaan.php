@@ -44,11 +44,12 @@ Class SuratPengadaan extends CI_Controller{
                 $tgl = $row->adaan_created_at;
             } 
         }
+        $month_name = array("Januari", "Februari", "Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
         $nowDate = date("d");
         $nowMonth = date("m");
         $nowYear = date("Y");
-        setlocale(LC_TIME, 'id');
-        $month_name = date('F', mktime(0, 0, 0, $nowMonth));
+        //setlocale(LC_TIME, 'id');
+        //$month_name = date('F', mktime(0, 0, 0, $nowMonth));
         $id_p = sprintf("%02d", $id_pengadaan);
         $newDate = date("Y-m-d", strtotime($tgl));
         // setting jenis font yang akan digunakan
@@ -64,7 +65,7 @@ Class SuratPengadaan extends CI_Controller{
         $pdf->Cell(140);
         $pdf->Cell(30,8,'NO :   PO-'.$newDate.'-'.$id_p,0,1,'R');
         $pdf->Cell(140);
-        $pdf->Cell(30,8,'Tanggal    :   '.$nowDate.' '.$month_name.' '.$nowYear,0,1,'R');
+        $pdf->Cell(30,8,'Tanggal    :   '.$nowDate.' '.$month_name[intval($nowMonth)-1].' '.$nowYear,0,1,'R');
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(30,6,'Kepada Yth :',0,1,'L');
         $pdf->Cell(30,6,$nama_supplier,0,1,'L');
@@ -102,7 +103,7 @@ Class SuratPengadaan extends CI_Controller{
         $pdf->Cell(10,20,'',0,1);
         $pdf->Cell(135);
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(30,7,'Dicetak tanggal '.$nowDate.' '.$month_name.' '.$nowYear,0,1,'C');
+        $pdf->Cell(30,7,'Dicetak tanggal '.$nowDate.' '.$month_name[intval($nowMonth)-1].' '.$nowYear,0,1,'C');
         $pdf->Output('Surat_Pemesanan_Kouvee.pdf','I');
         //.$param
     }
