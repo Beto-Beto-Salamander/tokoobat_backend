@@ -20,12 +20,22 @@ Class Hewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('hewan',array('hwn_deleted_at'=>null))->result(), false);
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan');
+            $this->db->from('hewan as h');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('hwn_deleted_at'=>null));
+            // return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            return $this->returnData($this->db->get_where('hewan',array('id_hewan' => $id,'hwn_deleted_at'=>null))->result(), false);
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan');
+            $this->db->from('hewan as h');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('id_hewan'=>$id,'hwn_deleted_at'=>null));
+            // return $this->returnData($this->db->get_where('produk',array('id_produk' => $id,'produk_deleted_at'=>null))->result(), false);
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
 
     public function log_get($id=null){ 
