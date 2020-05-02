@@ -39,6 +39,20 @@ class TransaksiLayananModel extends CI_Model
     public function Rules() { return $this->rule; } 
     
     public function store($request) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $q = $this->db->query("SELECT MAX(RIGHT(id_trans_layanan,2)) AS kd_max FROM transaksi_layanan WHERE DATE(tanggal_trans_layanan)=CURDATE()");
+        $kd = "";
+        if($q->num_rows()>0){
+            foreach($q->result() as $k){
+                $tmp = ((int)$k->kd_max)+1;
+                $kd = sprintf("%02s", $tmp);
+            }
+        }else{
+            $kd = "01";
+        }
+        $idbaru = 'LY-'.date('dmy').'-'.$kd;
+
+        $this->id_trans_layanan = $idbaru; 
         $this->id_pegawai = $request->id_pegawai; 
         $this->peg_id_pegawai = $request->peg_id_pegawai; 
         $this->id_hewan = $request->id_hewan;
