@@ -63,7 +63,7 @@ Class SuratPengadaan extends CI_Controller{
         $pdf->Cell(50,7,'SURAT PEMESANAN',0,1,'C');
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(140);
-        $pdf->Cell(30,8,'NO : PO-'.$newDate.'-'.$id_p,0,1);
+        $pdf->Cell(30,8,'NO : PO-'.$newDate.'-'.$id_p,0,1,'R');
         $pdf->Cell(140);
         $pdf->Cell(30,8,'Tanggal    :   '.$nowDate.' '.$month_name[intval($nowMonth)-1].' '.$nowYear,0,1,'R');
         $pdf->SetFont('Arial','',10);
