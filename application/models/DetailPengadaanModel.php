@@ -35,10 +35,11 @@ class DetailPengadaanModel extends CI_Model
         $query = $this->db->get();
         $total = $query->row();
 
-        if($request->id_pengadaan==0)
-            $this->id_pengadaan = $latest->id_pengadaan; 
+        if(empty($request->id_pengadaan))
+            $this->id_pengadaan = $latest->id_pengadaan;   
         else
             $this->id_pengadaan = $request->id_pengadaan; 
+            
 
         $this->id_produk = $request->id_produk; 
         $this->jml_pengadaan_produk = $request->jml_pengadaan_produk;
