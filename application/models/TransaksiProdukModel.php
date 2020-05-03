@@ -40,12 +40,9 @@ class TransaksiProdukModel extends CI_Model
     
     public function store($request) { date_default_timezone_set('Asia/Jakarta');
         $q = $this->db->query("SELECT MAX(RIGHT(id_trans_produk,2)) AS kd_max FROM transaksi_produk WHERE DATE(tanggal_trans_produk)=CURDATE()");
-        $kd = "";
-        if($q->num_rows()>0){
-            foreach($q->result() as $k){
-                $tmp = ((int)$k->kd_max)+1;
-                $kd = sprintf("%02s", $tmp);
-            }
+        if($q){
+            $tmp = ((int)$q->kd_max)+1;
+            $kd = sprintf("%02s", $tmp);
         }else{
             $kd = "01";
         }

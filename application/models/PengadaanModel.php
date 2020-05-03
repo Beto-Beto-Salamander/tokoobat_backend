@@ -18,13 +18,10 @@ class PengadaanModel extends CI_Model
     
     public function store($request) { 
         date_default_timezone_set('Asia/Jakarta');
-        $q = $this->db->query("SELECT MAX(RIGHT(id_pengadaan,2)) AS kd_max FROM pengadaan WHERE DATE(tgl_pengadaan)=CURDATE()");
-        $kd = "";
-        if($q->num_rows()>0){
-            foreach($q->result() as $k){
-                $tmp = ((int)$k->kd_max)+1;
-                $kd = sprintf("%02s", $tmp);
-            }
+        $q = $this->db->query("SELECT MAX(RIGHT(id_pengadaan,2)) AS kd_max FROM pengadaan WHERE DATE(tgl_pengadaan)=CURDATE()")->row();
+        if($q){
+            $tmp = ((int)$q->kd_max)+1;
+            $kd = sprintf("%02s", $tmp);
         }else{
             $kd = "01";
         }
