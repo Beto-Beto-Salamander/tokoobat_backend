@@ -52,7 +52,7 @@ class HargaLayananModel extends CI_Model
             'id_jenis' => $request->id_jenis,
             'id_ukuran' => $request->id_ukuran,
             'harga_layanan' => $request->harga_layanan,
-            'harga_deleted_at' =>$now
+            'harga_edited_at' =>$now
         ]; 
         if($this->db->where('id_harga_layanan',$id_harga_layanan)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil edit','error'=>false]; 
