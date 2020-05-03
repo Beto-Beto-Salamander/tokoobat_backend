@@ -109,7 +109,7 @@ class ProdukModel extends CI_Model
         if($this->db->where('id_produk',$id_produk)->update($this->table, $updateData)){ 
             $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
             if($getProduk->stok<=$getProduk->min_stok)
-                $fcmresponse=$this->sendNotif($getProduk->nama_produk.' hampir habis','Stok tinggal '.$getProduk->stok.' buah');
+                $fcmresponse=$this->sendNotif($getProduk->nama_produk.' hampir habis','Stok produk tinggal '.$getProduk->stok.' buah');
             // return ['msg'=>'Berhasil edit','error'=>false]; 
             return ['fcm'=>$fcmresponse,'msg'=>'Berhasil edit','error'=>false];
         } 

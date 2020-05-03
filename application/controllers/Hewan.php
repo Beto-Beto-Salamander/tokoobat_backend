@@ -46,13 +46,13 @@ Class Hewan extends REST_Controller{
         // }
         if($id==null){
             $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan,
-                                h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at');
+                                h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at, h.hwn_created_by, h.hwn_edited_by, h.hwn_deleted_by');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
         }   
         else{
             $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan,
-                                h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at');
+            h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at, h.hwn_created_by, h.hwn_edited_by, h.hwn_deleted_by');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('id_hewan'=>$id));
