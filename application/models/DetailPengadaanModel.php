@@ -94,7 +94,7 @@ class DetailPengadaanModel extends CI_Model
     private function setTotalPengadaan($id_pengadaan){
         $this->db->select('sum(subtotal_pengadaan) as subtotal');
         $this->db->from('detail_pengadaan');
-        $this->db->where('id_pengadaan='.$id_pengadaan);
+        $this->db->where(array('id_pengadaan'=>$id_pengadaan));
         $query = $this->db->get();
         $total = $query->row();
 
