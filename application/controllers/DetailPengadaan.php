@@ -19,7 +19,7 @@ Class DetailPengadaan extends REST_Controller{
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
-        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, dp.jml_pengadaan_produk, dp.satuan, dp.subtotal_pengadaan');
+        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, pro.harga_beli_produk, dp.jml_pengadaan_produk, dp.satuan, dp.subtotal_pengadaan');
         $this->db->from('detail_pengadaan as dp');
         $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
         $this->db->where(array('dp.id_pengadaan'=>$id));
