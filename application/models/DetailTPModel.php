@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class DetailProdukModel extends CI_Model 
+class DetailTPModel extends CI_Model 
 { 
     private $table = 'detail_trans_produk'; 
     public $id_detail_produk; 
