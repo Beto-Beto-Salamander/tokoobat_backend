@@ -18,12 +18,19 @@ Class DetailTL extends REST_Controller{
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
-        if($id==null){
-            return $this->returnData($this->db->get_where('detail_trans_layanan',array('id_detail_layanan'))->result(), false);
-        }   
-        else{
-            return $this->returnData($this->db->get_where('detail_trans_layanan',array('id_detail_layanan' => $id))->result(), false);
-        }
+        $space=" ";
+        $this->db->select("dtl.id_detail_layanan, dtl.id_trans_layanan, dtl.id_harga_layanan, 
+                            concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as nama_layanan, hl.harga_layanan,
+                            dtl.jumlah_beli_layanan, dtl.subtotal_layanan");
+        $this->db->from('detail_trans_layanan as dtl');
+        $this->db->join('harga_layanan as hl', 'dtl.id_harga_layanan = hl.id_harga_layanan');
+        $this->db->join('layanan as l', 'hl.id_layanan = l.id_layanan');
+        $this->db->join('jenis_hewan as j', 'hl.id_jenis = j.id_jenis');
+        $this->db->join('ukuran_hewan as u', 'hl.id_ukuran = u.id_ukuran');
+        $this->db->where(array('dtl.id_trans_layanan'=>$id));
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
             
     } 
 
@@ -32,11 +39,6 @@ Class DetailTL extends REST_Controller{
         $rule = $this->DetailTransaksiLayananModel->rules(); 
         if($id == null){ 
             array_push($rule,
-                [ 
-                    'field' => 'id_trans_layanan', 
-                    'label' => 'id_trans_layanan', 
-                    'rules' => 'required' 
-                ], 
                 [ 
                     'field' => 'id_harga_layanan', 
                     'label' => 'id_harga_layanan', 
@@ -64,7 +66,6 @@ Class DetailTL extends REST_Controller{
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_trans_layanan = new DetailTransaksiLayananData(); 
-            $detail_trans_layanan->id_trans_layanan = $this->post('id_trans_layanan'); 
             $detail_trans_layanan->id_harga_layanan  = $this->post('id_harga_layanan'); 
             $detail_trans_layanan->jumlah_beli_layanan = $this->post('jumlah_beli_layanan');  
 

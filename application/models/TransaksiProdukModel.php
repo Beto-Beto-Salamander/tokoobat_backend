@@ -26,11 +26,6 @@ class TransaksiProdukModel extends CI_Model
             'rules' => 'required' 
         ], 
         [ 
-            'field' => 'tanggal_trans_produk', 
-            'label' => 'tanggal_trans_produk', 
-            'rules' => 'required' 
-        ],
-        [ 
             'field' => 'status_penjualan_produk', 
             'label' => 'status_penjualan_produk', 
             'rules' => 'required' 
@@ -38,7 +33,9 @@ class TransaksiProdukModel extends CI_Model
     ]; 
     public function Rules() { return $this->rule; } 
     
-    public function store($request) { date_default_timezone_set('Asia/Jakarta');
+    public function store($request) { 
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date("Y-m-d");
         $q = $this->db->query("SELECT MAX(RIGHT(id_trans_produk,2)) AS kd_max FROM transaksi_produk WHERE DATE(tanggal_trans_produk)=CURDATE()");
         if($q){
             $tmp = ((int)$q->kd_max)+1;
@@ -49,10 +46,9 @@ class TransaksiProdukModel extends CI_Model
         $idbaru = 'PR-'.date('dmy').'-'.$kd;
         
         $this->id_trans_produk = $idbaru; 
-        $this->id_pegawai = $request->id_pegawai; 
-        $this->peg_id_pegawai = $request->peg_id_pegawai; 
+        $this->id_pegawai = $request->id_pegawai;  
         $this->id_hewan = $request->id_hewan;
-        $this->tanggal_trans_produk = $request->tanggal_trans_produk; 
+        $this->tanggal_trans_produk = $now; 
         $this->status_penjualan_produk = $request->status_penjualan_produk; 
         $this->transproduk_created_by = $request->transproduk_created_by; 
 
@@ -64,15 +60,26 @@ class TransaksiProdukModel extends CI_Model
     public function update($request,$id_trans_produk) { 
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s");
-        $updateData = [
-            'id_pegawai' =>$request->id_pegawai,
-            'peg_id_pegawai' =>$request->peg_id_pegawai,
-            'id_hewan' =>$request->id_hewan,
-            'tanggal_trans_produk' =>$request->tanggal_trans_produk,
-            'status_penjualan_produk' =>$request->status_penjualan_produk,
-            'transproduk_edited_at' =>$now,
-            'transproduk_edited_by' =>$$request->transproduk_edited_by
-        ]; 
+        if(!empty($request->tgl_pengadaan)){
+            $updateData = [
+                'id_pegawai' =>$request->id_pegawai,
+                'peg_id_pegawai' =>$request->peg_id_pegawai,
+                'id_hewan' =>$request->id_hewan,
+                'tanggal_trans_produk' =>$request->tanggal_trans_produk,
+                'status_penjualan_produk' =>$request->status_penjualan_produk,
+                'transproduk_edited_at' =>$now,
+                'transproduk_edited_by' =>$$request->transproduk_edited_by
+            ]; 
+        }else{
+            $updateData = [
+                'id_pegawai' =>$request->id_pegawai,
+                'peg_id_pegawai' =>$request->peg_id_pegawai,
+                'id_hewan' =>$request->id_hewan,
+                'status_penjualan_produk' =>$request->status_penjualan_produk,
+                'transproduk_edited_at' =>$now,
+                'transproduk_edited_by' =>$$request->transproduk_edited_by
+            ]; 
+        }
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil edit','error'=>false]; 
         } 

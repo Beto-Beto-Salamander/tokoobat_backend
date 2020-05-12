@@ -18,12 +18,14 @@ Class DetailTP extends REST_Controller{
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
-        if($id==null){
-            return $this->returnData($this->db->get_where('detail_trans_produk',array('id_detail_produk'))->result(), false);
-        }   
-        else{
-            return $this->returnData($this->db->get_where('detail_trans_produk',array('id_detail_produk' => $id))->result(), false);
-        }
+        $this->db->select('dtp.id_detail_produk, dtp.id_trans_produk, dtp.id_produk, p.nama_produk, p.harga_jual_produk,
+                            dtp.jumlah_beli_produk, dtp.subtotal_produk');
+        $this->db->from('detail_trans_produk as dtp');
+        $this->db->join('produk as p', 'dtp.id_produk = p.id_produk');
+        $this->db->where(array('dtp.id_trans_produk'=>$id));
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);   
             
     } 
 
@@ -33,13 +35,8 @@ Class DetailTP extends REST_Controller{
         if($id == null){ 
             array_push($rule,
                 [ 
-                    'field' => 'id_trans_produk', 
-                    'label' => 'id_trans_produk', 
-                    'rules' => 'required' 
-                ], 
-                [ 
-                    'field' => 'id_harga_produk', 
-                    'label' => 'id_harga_produk', 
+                    'field' => 'id_produk', 
+                    'label' => 'id_produk', 
                     'rules' => 'required' 
                 ],
                 [ 
@@ -64,8 +61,7 @@ Class DetailTP extends REST_Controller{
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_trans_produk = new DetailTransaksiProdukData(); 
-            $detail_trans_produk->id_trans_produk = $this->post('id_trans_produk'); 
-            $detail_trans_produk->id_harga_produk  = $this->post('id_harga_produk'); 
+            $detail_trans_produk->id_harga_produk  = $this->post('id_produk'); 
             $detail_trans_produk->jumlah_beli_produk = $this->post('jumlah_beli_produk');  
 
             $response = $this->DetailTransaksiProdukModel->update($detail_trans_produk,$id); 

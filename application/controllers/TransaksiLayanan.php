@@ -20,12 +20,37 @@ Class TransaksiLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('transaksi_layanan',array('translay_deleted_at'=>null))->result(), false);
+            // $this->db->distinct();
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
+                                kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.translay_deleted_at'=>null));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
-            return $this->returnData($this->db->get_where('transaksi_layanan',array('id_trans_layanan' => $id,'translay_deleted_at'=>null))->result(), false);
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
+                                kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
     } 
 
     public function log_get($id=null){ 
@@ -35,12 +60,40 @@ Class TransaksiLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            return $this->returnData($this->db->get_where('transaksi_layanan')->result(), false);
+            // $this->db->distinct();
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
+                                kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
-            return $this->returnData($this->db->get_where('transaksi_layanan',array('id_trans_layanan' => $id))->result(), false);
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
+                                kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.id_trans_layanan'=>$id));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
         }
-            
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
     } 
 
     public function index_post($id = null){ 
@@ -58,11 +111,6 @@ Class TransaksiLayanan extends REST_Controller{
                     'label' => 'id_hewan', 
                     'rules' => 'required' 
                 ], 
-                [ 
-                    'field' => 'tanggal_trans_layanan', 
-                    'label' => 'tanggal_trans_layanan', 
-                    'rules' => 'required' 
-                ],
                 [ 
                     'field' => 'status_layanan', 
                     'label' => 'status_layanan', 

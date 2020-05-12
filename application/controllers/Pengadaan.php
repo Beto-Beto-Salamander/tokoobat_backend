@@ -37,6 +37,7 @@ Class Pengadaan extends REST_Controller{
             $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
             $this->db->join('supplier as s', 'pro.id_supplier = s.id_supplier');
             $this->db->where(array('p.id_pengadaan'=>$id,'p.adaan_deleted_at'=>null));
+            $this->db->group_by('p.id_pengadaan');
         }
         $query=$this->db->get();
         $data=$query->result_array();
@@ -60,6 +61,7 @@ Class Pengadaan extends REST_Controller{
             $this->db->order_by('p.tgl_pengadaan','DESC');
         }   
         else{
+            $this->db->distinct();
             $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
@@ -89,6 +91,7 @@ Class Pengadaan extends REST_Controller{
             $this->db->order_by('p.tgl_pengadaan','DESC');
         }   
         else{
+            $this->db->distinct();
             $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
@@ -118,6 +121,7 @@ Class Pengadaan extends REST_Controller{
             $this->db->order_by('p.tgl_pengadaan','DESC');
         }   
         else{
+            $this->db->distinct();
             $this->db->select('p.id_pengadaan, p.tgl_pengadaan, p.total_pengadaan, p.status_pengadaan, s.id_supplier, s.nama_supplier');
             $this->db->from('pengadaan as p');
             $this->db->join('detail_pengadaan as dp', 'p.id_pengadaan = dp.id_pengadaan');
