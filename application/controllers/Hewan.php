@@ -20,16 +20,18 @@ Class Hewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan');
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.id_jenis, j.jenis, c.telp_customer, c.alamat_customer, h.nama_hewan, h.tgl_lahir_hewan');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
             $this->db->where(array('hwn_deleted_at'=>null));
             // return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan');
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.id_jenis, j.jenis, c.telp_customer, c.alamat_customer, h.nama_hewan, h.tgl_lahir_hewan');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
             $this->db->where(array('id_hewan'=>$id,'hwn_deleted_at'=>null));
             // return $this->returnData($this->db->get_where('produk',array('id_produk' => $id,'produk_deleted_at'=>null))->result(), false);
         }
@@ -45,16 +47,18 @@ Class Hewan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan,
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.id_jenis, j.jenis, c.telp_customer, c.alamat_customer, h.nama_hewan, h.tgl_lahir_hewan,
                                 h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at, h.hwn_created_by, h.hwn_edited_by, h.hwn_deleted_by');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
         }   
         else{
-            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.nama_hewan, h.tgl_lahir_hewan,
+            $this->db->select('h.id_hewan, h.id_customer, c.nama_customer, h.id_jenis, j.jenis, c.telp_customer, c.alamat_customer, h.nama_hewan, h.tgl_lahir_hewan,
             h.hwn_created_at, h.hwn_edited_at, h.hwn_deleted_at, h.hwn_created_by, h.hwn_edited_by, h.hwn_deleted_by');
             $this->db->from('hewan as h');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
             $this->db->where(array('id_hewan'=>$id));
         }
         $query=$this->db->get();
@@ -70,6 +74,11 @@ Class Hewan extends REST_Controller{
                 [ 
                     'field' => 'id_customer', 
                     'label' => 'id_customer', 
+                    'rules' => 'required' 
+                ],
+                [ 
+                    'field' => 'id_jenis', 
+                    'label' => 'id_jenis', 
                     'rules' => 'required' 
                 ],
                 [ 
@@ -92,6 +101,7 @@ Class Hewan extends REST_Controller{
         if($id == null){
             $hewan = new HewanData(); 
             $hewan->id_customer = $this->post('id_customer');
+            $hewan->id_jenis = $this->post('id_jenis');
             $hewan->nama_hewan = $this->post('nama_hewan'); 
             $hewan->tgl_lahir_hewan = $this->post('tgl_lahir_hewan');
             $hewan->hwn_created_by = $this->post('hwn_created_by'); 
@@ -101,6 +111,7 @@ Class Hewan extends REST_Controller{
         }else{ 
             $hewan = new HewanData(); 
             $hewan->id_customer = $this->post('id_customer'); 
+            $hewan->id_jenis = $this->post('id_jenis');
             $hewan->nama_hewan = $this->post('nama_hewan'); 
             $hewan->tgl_lahir_hewan = $this->post('tgl_lahir_hewan');
             $hewan->hwn_edited_by = $this->post('hwn_edited_by');
@@ -164,6 +175,7 @@ Class Hewan extends REST_Controller{
 Class HewanData{ 
     public $id_customer;
     public $nama_hewan; 
+    public $id_jenis;
     public $tgl_lahir_hewan;
     public $hwn_deleted_at; 
     public $hwn_created_by; 

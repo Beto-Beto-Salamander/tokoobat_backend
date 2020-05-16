@@ -127,7 +127,6 @@ Class TransaksiLayanan extends REST_Controller{
             $trans_layanan = new TransaksiLayananData(); 
             $trans_layanan->id_pegawai = $this->post('id_pegawai'); 
             $trans_layanan->id_hewan  = $this->post('id_hewan'); 
-            $trans_layanan->tanggal_trans_layanan = $this->post('tanggal_trans_layanan');
             $trans_layanan->status_layanan = $this->post('status_layanan');
             $trans_layanan->translay_created_by = $this->post('translay_created_by');
 

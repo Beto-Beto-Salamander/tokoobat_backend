@@ -44,7 +44,7 @@ class TransaksiProdukModel extends CI_Model
             $kd = "01";
         }
         $idbaru = 'PR-'.date('dmy').'-'.$kd;
-        
+
         $this->id_trans_produk = $idbaru; 
         $this->id_pegawai = $request->id_pegawai;  
         $this->id_hewan = $request->id_hewan;
@@ -63,7 +63,6 @@ class TransaksiProdukModel extends CI_Model
         if(!empty($request->tgl_pengadaan)){
             $updateData = [
                 'id_pegawai' =>$request->id_pegawai,
-                'peg_id_pegawai' =>$request->peg_id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'tanggal_trans_produk' =>$request->tanggal_trans_produk,
                 'status_penjualan_produk' =>$request->status_penjualan_produk,
@@ -73,7 +72,6 @@ class TransaksiProdukModel extends CI_Model
         }else{
             $updateData = [
                 'id_pegawai' =>$request->id_pegawai,
-                'peg_id_pegawai' =>$request->peg_id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'status_penjualan_produk' =>$request->status_penjualan_produk,
                 'transproduk_edited_at' =>$now,

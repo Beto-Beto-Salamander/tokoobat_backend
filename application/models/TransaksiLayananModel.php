@@ -49,11 +49,11 @@ class TransaksiLayananModel extends CI_Model
         }
         $idbaru = 'LY-'.date('dmy').'-'.$kd;
 
+        $now = date("Y-m-d");
         $this->id_trans_layanan = $idbaru; 
         $this->id_pegawai = $request->id_pegawai; 
-        $this->peg_id_pegawai = $request->peg_id_pegawai; 
         $this->id_hewan = $request->id_hewan;
-        $this->tanggal_trans_layanan = $request->tanggal_trans_layanan; 
+        $this->tanggal_trans_layanan = $now; 
         $this->status_layanan = $request->status_layanan; 
         $this->translay_created_by = $request->translay_created_by; 
 
@@ -65,15 +65,27 @@ class TransaksiLayananModel extends CI_Model
     public function update($request,$id_trans_layanan) { 
         date_default_timezone_set('Asia/Jakarta');
         $now = date("Y-m-d H:i:s");
-        $updateData = [
-            'id_pegawai' =>$request->id_pegawai,
-            'peg_id_pegawai' =>$request->peg_id_pegawai,
-            'id_hewan' =>$request->id_hewan,
-            'tanggal_trans_layanan' =>$request->tanggal_trans_layanan,
-            'status_layanan' =>$request->status_layanan,
-            'translay_edited_at' =>$now,
-            'translay_edited_by' =>$$request->translay_edited_by
-        ]; 
+        
+        if(!empty($request->tgl_pengadaan)){
+            $updateData = [
+                'id_pegawai' =>$request->id_pegawai,
+                'peg_id_pegawai' =>$request->peg_id_pegawai,
+                'id_hewan' =>$request->id_hewan,
+                'tanggal_trans_layanan' =>$request->tanggal_trans_layanan,
+                'status_layanan' =>$request->status_layanan,
+                'translay_edited_at' =>$now,
+                'translay_edited_by' =>$$request->translay_edited_by
+            ]; 
+        }else{
+            $updateData = [
+                'id_pegawai' =>$request->id_pegawai,
+                'peg_id_pegawai' =>$request->peg_id_pegawai,
+                'id_hewan' =>$request->id_hewan,
+                'status_layanan' =>$request->status_layanan,
+                'translay_edited_at' =>$now,
+                'translay_edited_by' =>$$request->translay_edited_by
+            ]; 
+        }
         if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil edit','error'=>false]; 
         } 

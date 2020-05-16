@@ -54,14 +54,14 @@ Class DetailTP extends REST_Controller{
         if($id == null){
             $detail_trans_produk = new DetailTransaksiProdukData(); 
             $detail_trans_produk->id_trans_produk = $this->post('id_trans_produk'); 
-            $detail_trans_produk->id_harga_produk  = $this->post('id_harga_produk'); 
+            $detail_trans_produk->id_produk  = $this->post('id_produk'); 
             $detail_trans_produk->jumlah_beli_produk = $this->post('jumlah_beli_produk');
 
             $response = $this->DetailTransaksiProdukModel->store($detail_trans_produk);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_trans_produk = new DetailTransaksiProdukData(); 
-            $detail_trans_produk->id_harga_produk  = $this->post('id_produk'); 
+            $detail_trans_produk->id_produk  = $this->post('id_produk'); 
             $detail_trans_produk->jumlah_beli_produk = $this->post('jumlah_beli_produk');  
 
             $response = $this->DetailTransaksiProdukModel->update($detail_trans_produk,$id); 
