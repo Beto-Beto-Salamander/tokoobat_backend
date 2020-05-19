@@ -36,7 +36,7 @@ Class DetailTL extends REST_Controller{
 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
-        $rule = $this->DetailTransaksiLayananModel->rules(); 
+        $rule = $this->DetailTLModel->rules(); 
         if($id == null){ 
             array_push($rule,
                 [ 
@@ -62,14 +62,14 @@ Class DetailTL extends REST_Controller{
             $detail_trans_layanan->id_harga_layanan  = $this->post('id_harga_layanan'); 
             $detail_trans_layanan->jumlah_beli_layanan = $this->post('jumlah_beli_layanan');
 
-            $response = $this->DetailTransaksiLayananModel->store($detail_trans_layanan);
+            $response = $this->DetailTLModel->store($detail_trans_layanan);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_trans_layanan = new DetailTransaksiLayananData(); 
             $detail_trans_layanan->id_harga_layanan  = $this->post('id_harga_layanan'); 
             $detail_trans_layanan->jumlah_beli_layanan = $this->post('jumlah_beli_layanan');  
 
-            $response = $this->DetailTransaksiLayananModel->update($detail_trans_layanan,$id); 
+            $response = $this->DetailTLModel->update($detail_trans_layanan,$id); 
             return $this->returnData($response['msg'], $response['error']);
         } 
        
@@ -81,7 +81,7 @@ Class DetailTL extends REST_Controller{
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 
         } 
-        $response = $this->DetailTransaksiLayananModel->destroy($id); 
+        $response = $this->DetailTLModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
     public function returnData($msg,$error){ 

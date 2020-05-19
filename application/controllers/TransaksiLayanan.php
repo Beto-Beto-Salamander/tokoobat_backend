@@ -21,6 +21,114 @@ Class TransaksiLayanan extends REST_Controller{
         // }
         if($id==null){
             // $this->db->distinct();
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.translay_deleted_at'=>null));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }   
+        else{
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
+    } 
+
+    public function belumselesai_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            // $this->db->distinct();
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Belum Selesai'));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }   
+        else{
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Belum Selesai'));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
+    } 
+
+    public function selesai_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            // $this->db->distinct();
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Selesai'));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }   
+        else{
+            $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+            $this->db->from('transaksi_layanan as tl');
+            $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+            $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
+            $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Selesai'));
+            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->group_by('tl.id_trans_layanan');
+        }
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false);  
+    } 
+
+    public function lunas_get($id=null){ 
+        // $data = $this->verify_request();
+        $status = parent::HTTP_OK;
+        // if($data['status'] == 401){
+        //     return $this->returnData($data['msg'], true);
+        // }
+        if($id==null){
+            // $this->db->distinct();
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
                                 kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
                                 tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
@@ -30,7 +138,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
-            $this->db->where(array('tl.translay_deleted_at'=>null));
+            $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Lunas'));
             $this->db->order_by('tl.tanggal_trans_layanan','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
@@ -44,7 +152,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
-            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null));
+            $this->db->where(array('tl.id_trans_layanan'=>$id,'tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Lunas'));
             $this->db->order_by('tl.tanggal_trans_layanan','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }
@@ -96,6 +204,17 @@ Class TransaksiLayanan extends REST_Controller{
         return $this->returnData($data, false);  
     } 
 
+    public function layananselesai_get(){
+        $basic  = new \Nexmo\Client\Credentials\Basic('0241ff8d', 'o5KN3ZEqeBjJG8bs');
+        $client = new \Nexmo\Client($basic);
+
+        $message = $client->message()->send([
+            'to' => '6281233677490',
+            'from' => 'hapie',
+            'text' => 'hapie'
+        ]);
+    }
+
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
         $rule = $this->TransaksiLayananModel->rules(); 
@@ -122,7 +241,6 @@ Class TransaksiLayanan extends REST_Controller{
         if (!$validation->run()) { 
             return $this->response($this->form_validation->error_array()); 
         } 
-
         if($id == null){
             $trans_layanan = new TransaksiLayananData(); 
             $trans_layanan->id_pegawai = $this->post('id_pegawai'); 

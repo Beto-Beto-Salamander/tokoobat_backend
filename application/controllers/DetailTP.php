@@ -31,7 +31,7 @@ Class DetailTP extends REST_Controller{
 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
-        $rule = $this->DetailTransaksiProdukModel->rules(); 
+        $rule = $this->DetailTPModel->rules(); 
         if($id == null){ 
             array_push($rule,
                 [ 
@@ -57,14 +57,14 @@ Class DetailTP extends REST_Controller{
             $detail_trans_produk->id_produk  = $this->post('id_produk'); 
             $detail_trans_produk->jumlah_beli_produk = $this->post('jumlah_beli_produk');
 
-            $response = $this->DetailTransaksiProdukModel->store($detail_trans_produk);
+            $response = $this->DetailTPModel->store($detail_trans_produk);
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $detail_trans_produk = new DetailTransaksiProdukData(); 
             $detail_trans_produk->id_produk  = $this->post('id_produk'); 
             $detail_trans_produk->jumlah_beli_produk = $this->post('jumlah_beli_produk');  
 
-            $response = $this->DetailTransaksiProdukModel->update($detail_trans_produk,$id); 
+            $response = $this->DetailTPModel->update($detail_trans_produk,$id); 
             return $this->returnData($response['msg'], $response['error']);
         } 
        
@@ -76,7 +76,7 @@ Class DetailTP extends REST_Controller{
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 
         } 
-        $response = $this->DetailTransaksiProdukModel->destroy($id); 
+        $response = $this->DetailTPModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
     public function returnData($msg,$error){ 

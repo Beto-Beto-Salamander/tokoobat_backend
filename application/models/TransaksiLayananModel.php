@@ -26,11 +26,6 @@ class TransaksiLayananModel extends CI_Model
             'rules' => 'required' 
         ], 
         [ 
-            'field' => 'tanggal_trans_layanan', 
-            'label' => 'tanggal_trans_layanan', 
-            'rules' => 'required' 
-        ],
-        [ 
             'field' => 'status_layanan', 
             'label' => 'status_layanan', 
             'rules' => 'required' 
@@ -40,7 +35,7 @@ class TransaksiLayananModel extends CI_Model
     
     public function store($request) { 
         date_default_timezone_set('Asia/Jakarta');
-        $q = $this->db->query("SELECT MAX(RIGHT(id_trans_layanan,2)) AS kd_max FROM transaksi_layanan WHERE DATE(tanggal_trans_layanan)=CURDATE()");
+        $q = $this->db->query("SELECT MAX(RIGHT(id_trans_layanan,2)) AS kd_max FROM transaksi_layanan WHERE DATE(tanggal_trans_layanan)=CURDATE()")->row();
         if($q){
             $tmp = ((int)$q->kd_max)+1;
             $kd = sprintf("%02s", $tmp);
