@@ -20,7 +20,8 @@ Class HargaLayanan extends REST_Controller{
         //     return $this->returnData($data['msg'], true);
         // }
         if($id==null){
-            $this->db->select("h.id_harga_layanan, h.id_layanan, concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan");
+            $this->db->select("h.id_harga_layanan, h.id_layanan, concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan,
+                                h.harga_created_at, h.harga_deleted_at, h.harga_edited_at");
             $this->db->from('harga_layanan as h');
             $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
             $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
@@ -28,7 +29,8 @@ Class HargaLayanan extends REST_Controller{
             $this->db->where(array('h.harga_deleted_at'=>null));
         }   
         else{
-            $this->db->select("h.id_harga_layanan, h.id_layanan, concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan");
+            $this->db->select("h.id_harga_layanan, h.id_layanan, concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as nama_layanan, h.id_jenis, j.jenis, h.id_ukuran, u.ukuran, h.harga_layanan,
+                                h.harga_created_at, h.harga_deleted_at, h.harga_edited_at");
             $this->db->from('harga_layanan as h');
             $this->db->join('layanan as l', 'h.id_layanan = l.id_layanan');
             $this->db->join('jenis as j', 'h.id_jenis = j.id_jenis');

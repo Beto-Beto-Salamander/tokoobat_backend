@@ -22,7 +22,9 @@ Class TransaksiLayanan extends REST_Controller{
         if($id==null){
             // $this->db->distinct();
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -34,7 +36,9 @@ Class TransaksiLayanan extends REST_Controller{
         }   
         else{
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -58,7 +62,9 @@ Class TransaksiLayanan extends REST_Controller{
         if($id==null){
             // $this->db->distinct();
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -70,7 +76,9 @@ Class TransaksiLayanan extends REST_Controller{
         }   
         else{
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -94,7 +102,9 @@ Class TransaksiLayanan extends REST_Controller{
         if($id==null){
             // $this->db->distinct();
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -106,7 +116,9 @@ Class TransaksiLayanan extends REST_Controller{
         }   
         else{
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -131,7 +143,9 @@ Class TransaksiLayanan extends REST_Controller{
             // $this->db->distinct();
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
                                 kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');
@@ -145,7 +159,9 @@ Class TransaksiLayanan extends REST_Controller{
         else{
             $this->db->select('tl.id_trans_layanan, tl.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tl.peg_id_pegawai as id_kasir, 
                                 kasir.nama_pegawai as nama_kasir, tl.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan');
+                                tl.tanggal_trans_layanan, tl.diskon_layanan, tl.total_layanan, tl.status_layanan,
+                                tl.translay_created_at, tl.translay_edited_at, tl.translay_deleted_at,
+                                tl.translay_created_by, tl.translay_edited_by, tl.translay_deleted_by');
             $this->db->from('transaksi_layanan as tl');
             $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
             $this->db->join('pegawai as cs', 'tl.id_pegawai = cs.id_pegawai');

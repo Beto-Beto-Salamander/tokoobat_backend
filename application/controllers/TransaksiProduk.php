@@ -23,7 +23,9 @@ Class TransaksiProduk extends REST_Controller{
             // $this->db->distinct();
             $this->db->select('tp.id_trans_produk, tp.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tp.peg_id_pegawai as id_kasir, 
                                 kasir.nama_pegawai as nama_kasir, tp.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tp.tanggal_trans_produk, tp.diskon_produk, tp.total_produk, tp.status_penjualan_produk');
+                                tp.tanggal_trans_produk, tp.diskon_produk, tp.total_produk, tp.status_penjualan_produk,
+                                tp.transproduk_created_at, tp.transproduk_edited_at, tp.transproduk_deleted_at,
+                                tp.transproduk_created_by, tp.transproduk_edited_by, tp.transproduk_deleted_by');
             $this->db->from('transaksi_produk as tp');
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
@@ -37,7 +39,9 @@ Class TransaksiProduk extends REST_Controller{
         else{
             $this->db->select('tp.id_trans_produk, tp.id_pegawai as id_cs, cs.nama_pegawai as nama_cs, tp.peg_id_pegawai as id_kasir, 
                                 kasir.nama_pegawai as nama_kasir, tp.id_hewan, h.nama_hewan, h.id_customer, c.nama_customer,
-                                tp.tanggal_trans_produk, tp.diskon_produk, tp.total_produk, tp.status_penjualan_produk');
+                                tp.tanggal_trans_produk, tp.diskon_produk, tp.total_produk, tp.status_penjualan_produk,
+                                tp.transproduk_created_at, tp.transproduk_edited_at, tp.transproduk_deleted_at,
+                                tp.transproduk_created_by, tp.transproduk_edited_by, tp.transproduk_deleted_by');
             $this->db->from('transaksi_produk as tp');
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');

@@ -41,9 +41,9 @@ class DetailTLModel extends CI_Model
         $this->subtotal_layanan = $total->harga;
         if($this->db->insert($this->table, $this)){ 
             $this->setTotalTranslay($this->id_trans_layanan);
-            return ['msg'=>'Success','error'=>false];
+            return ['msg'=>'Berhasil Tambah','error'=>false];
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal Tambah','error'=>true]; 
     } 
     public function update($request,$id_detail_layanan) { 
         $this->db->select('(harga_layanan)*'.$request->jumlah_beli_layanan.' as harga');
@@ -61,9 +61,9 @@ class DetailTLModel extends CI_Model
         ]; 
         if($this->db->where('id_detail_layanan',$id_detail_layanan)->update($this->table, $updateData)){ 
             $this->setTotalTranslay($request->id_trans_layanan);
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil Edit','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal Edit','error'=>true]; 
     } 
 
     public function destroy($id_detail_layanan){ 
@@ -80,9 +80,9 @@ class DetailTLModel extends CI_Model
         if($this->db->delete($this->table, array('id_detail_layanan' => $id_detail_layanan))){ 
             $this->db->where('id_trans_layanan',$dataDetail->id_trans_layanan)->update('transaksi_layanan', $deleteData);
             $this->setTotalTranslay($dataDetail->id_trans_layanan);
-            return ['msg'=>'Success','error'=>false]; 
+            return ['msg'=>'Berhasil Hapus','error'=>false]; 
         } 
-        return ['msg'=>'Failed','error'=>true]; 
+        return ['msg'=>'Gagal Hapus','error'=>true]; 
     }   
 
     private function setTotalTranslay($id_trans_layanan){

@@ -21,14 +21,14 @@ Class Produk extends REST_Controller{
         // }
             
         if($id==null){
-            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok');
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok, p.produk_created_at, p.produk_edited_at, p.produk_deleted_at');
             $this->db->from('produk as p');
             $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
             $this->db->where(array('produk_deleted_at'=>null));
             // return $this->returnData($this->db->get_where('produk',array('produk_deleted_at'=>null))->result(), false);
         }   
         else{
-            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok');
+            $this->db->select('p.id_produk, p.id_supplier, s.nama_supplier, p.nama_produk, p.foto_produk, p.harga_beli_produk, p.harga_jual_produk, p.stok, p.min_stok, p.produk_created_at, p.produk_edited_at, p.produk_deleted_at');
             $this->db->from('produk as p');
             $this->db->join('supplier as s', 'p.id_supplier = s.id_supplier');
             $this->db->where(array('id_produk' => $id,'produk_deleted_at'=>null));
