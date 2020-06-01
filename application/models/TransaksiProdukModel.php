@@ -16,11 +16,6 @@ class TransaksiProdukModel extends CI_Model
     public $transproduk_deleted_by;
     public $rule = [ 
         [ 
-            'field' => 'id_pegawai', 
-            'label' => 'id_pegawai', 
-            'rules' => 'required' 
-        ], 
-        [ 
             'field' => 'id_hewan', 
             'label' => 'id_hewan', 
             'rules' => 'required' 
@@ -62,20 +57,18 @@ class TransaksiProdukModel extends CI_Model
         $now = date("Y-m-d H:i:s");
         if(!empty($request->tgl_pengadaan)){
             $updateData = [
-                'id_pegawai' =>$request->id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'tanggal_trans_produk' =>$request->tanggal_trans_produk,
                 'status_penjualan_produk' =>$request->status_penjualan_produk,
                 'transproduk_edited_at' =>$now,
-                'transproduk_edited_by' =>$$request->transproduk_edited_by
+                'transproduk_edited_by' =>$request->transproduk_edited_by
             ]; 
         }else{
             $updateData = [
-                'id_pegawai' =>$request->id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'status_penjualan_produk' =>$request->status_penjualan_produk,
                 'transproduk_edited_at' =>$now,
-                'transproduk_edited_by' =>$$request->transproduk_edited_by
+                'transproduk_edited_by' =>$request->transproduk_edited_by
             ]; 
         }
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $updateData)){ 
@@ -91,7 +84,7 @@ class TransaksiProdukModel extends CI_Model
         $now = date("Y-m-d H:i:s"); 
         $deleteData = [
             'transproduk_deleted_at' =>$now,
-            'transproduk_deleted_by' =>$$request->transproduk_deleted_by
+            'transproduk_deleted_by' =>$request->transproduk_deleted_by
         ]; 
         if($this->db->where('id_trans_produk',$id_trans_produk)->update($this->table, $deleteData)){ 
             return ['msg'=>'Berhasil hapus','error'=>false]; 

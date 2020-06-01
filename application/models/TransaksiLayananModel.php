@@ -16,11 +16,6 @@ class TransaksiLayananModel extends CI_Model
     public $translay_deleted_by;
     public $rule = [ 
         [ 
-            'field' => 'id_pegawai', 
-            'label' => 'id_pegawai', 
-            'rules' => 'required' 
-        ], 
-        [ 
             'field' => 'id_hewan', 
             'label' => 'id_hewan', 
             'rules' => 'required' 
@@ -63,22 +58,18 @@ class TransaksiLayananModel extends CI_Model
         
         if(!empty($request->tgl_pengadaan)){
             $updateData = [
-                'id_pegawai' =>$request->id_pegawai,
-                'peg_id_pegawai' =>$request->peg_id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'tanggal_trans_layanan' =>$request->tanggal_trans_layanan,
                 'status_layanan' =>$request->status_layanan,
                 'translay_edited_at' =>$now,
-                'translay_edited_by' =>$$request->translay_edited_by
+                'translay_edited_by' =>$request->translay_edited_by
             ]; 
         }else{
             $updateData = [
-                'id_pegawai' =>$request->id_pegawai,
-                'peg_id_pegawai' =>$request->peg_id_pegawai,
                 'id_hewan' =>$request->id_hewan,
                 'status_layanan' =>$request->status_layanan,
                 'translay_edited_at' =>$now,
-                'translay_edited_by' =>$$request->translay_edited_by
+                'translay_edited_by' =>$request->translay_edited_by
             ]; 
         }
         if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $updateData)){ 

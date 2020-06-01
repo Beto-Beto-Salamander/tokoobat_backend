@@ -110,8 +110,9 @@ class ProdukModel extends CI_Model
             $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
             if($getProduk->stok<=$getProduk->min_stok)
                 $fcmresponse=$this->sendNotif($getProduk->nama_produk.' hampir habis','Stok produk tinggal '.$getProduk->stok.' buah');
+                $emailresponse=$this->sendEmail($getProduk->nama_produk,$getProduk->stok);
             // return ['msg'=>'Berhasil edit','error'=>false]; 
-            return ['fcm'=>$fcmresponse,'msg'=>'Berhasil edit','error'=>false];
+            return ['fcm'=>$emailresponse,'msg'=>'Berhasil edit','error'=>false];
         } 
         return ['msg'=>'Gagal edit','error'=>true]; 
     } 
@@ -206,6 +207,29 @@ class ProdukModel extends CI_Model
         //sending push notification and displaying result 
         return $firebase->send($devicetoken, $mPushNotification);
     } 
+
+    public function sendEmail($produk, $jumlah){
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $mail-> IsSMTP();
+        $mail-> SMTPSecure = 'tsl';
+        $mail-> Host = 'smtp.gmail.com';
+        $mail-> SMTPAuth = true;
+        $mail-> Username = "petshopkouvee12345@gmail.com";
+        $mail-> Password = "admin12345!";
+        $mail-> Port = 587;
+
+        $mail-> setFrom('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
+        $mail-> addAddress('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
+        $mail-> Subject = "[PERINGATAN PRODUK HAMPIR HABIS]";
+        $mail->isHTML(true);
+        $mail->Body = 'Produk '.$produk.' tersisa '.$jumlah.' buah. Harap segera melakukan pengadaan!';
+
+        if($mail->send()){
+            return "Berhasil kirim email";
+        } else {
+            return $mail->ErrorInfo;
+        }
+    }
 
     public function getTokenAdmin(){
         $this->db->select('token');

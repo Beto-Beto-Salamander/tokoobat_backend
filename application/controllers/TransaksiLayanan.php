@@ -31,7 +31,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tl.translay_deleted_at'=>null));
-            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->order_by('tl.translay_created_at','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
@@ -71,7 +71,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Belum Selesai'));
-            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->order_by('tl.translay_created_at','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
@@ -111,7 +111,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Selesai'));
-            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->order_by('tl.translay_created_at','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
@@ -153,7 +153,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tl.translay_deleted_at'=>null,'tl.status_layanan'=>'Lunas'));
-            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->order_by('tl.translay_created_at','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
@@ -196,7 +196,7 @@ Class TransaksiLayanan extends REST_Controller{
             $this->db->join('pegawai as kasir', 'tl.peg_id_pegawai = kasir.id_pegawai');
             $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
-            $this->db->order_by('tl.tanggal_trans_layanan','DESC');
+            $this->db->order_by('tl.translay_created_at','DESC');
             $this->db->group_by('tl.id_trans_layanan');
         }   
         else{
@@ -220,7 +220,7 @@ Class TransaksiLayanan extends REST_Controller{
         return $this->returnData($data, false);  
     } 
 
-    public function layananselesai_get(){
+    public function groomingselesai_get(){
         $basic  = new \Nexmo\Client\Credentials\Basic('0241ff8d', 'o5KN3ZEqeBjJG8bs');
         $client = new \Nexmo\Client($basic);
 
@@ -236,11 +236,6 @@ Class TransaksiLayanan extends REST_Controller{
         $rule = $this->TransaksiLayananModel->rules(); 
         if($id == null){ 
             array_push($rule,
-                [ 
-                    'field' => 'id_pegawai', 
-                    'label' => 'id_pegawai', 
-                    'rules' => 'required' 
-                ], 
                 [ 
                     'field' => 'id_hewan', 
                     'label' => 'id_hewan', 
@@ -268,7 +263,6 @@ Class TransaksiLayanan extends REST_Controller{
             return $this->returnData($response['msg'], $response['error']); 
         }else{ 
             $trans_layanan = new TransaksiLayananData(); 
-            $trans_layanan->id_pegawai = $this->post('id_pegawai'); 
             $trans_layanan->id_hewan  = $this->post('id_hewan'); 
             $trans_layanan->tanggal_trans_layanan = $this->post('tanggal_trans_layanan');
             $trans_layanan->status_layanan = $this->post('status_layanan');

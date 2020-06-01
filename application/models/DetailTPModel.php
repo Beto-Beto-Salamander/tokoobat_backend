@@ -25,7 +25,7 @@ class DetailTPModel extends CI_Model
     public function store($request) { 
         $latest=$this->latest_get();
         $this->db->select('(harga_jual_produk)*'.$request->jumlah_beli_produk.' as harga');
-        $this->db->from('harga_jual_produk');
+        $this->db->from('produk');
         $this->db->where('id_produk='.$request->id_produk);
         $query = $this->db->get();
         $total = $query->row();
@@ -47,7 +47,7 @@ class DetailTPModel extends CI_Model
     } 
     public function update($request,$id_detail_produk) { 
         $this->db->select('(harga_jual_produk)*'.$request->jumlah_beli_produk.' as harga');
-        $this->db->from('harga_jual_produk');
+        $this->db->from('produk');
         $this->db->where('id_produk='.$request->id_produk);
         $query = $this->db->get();
         $total = $query->row();

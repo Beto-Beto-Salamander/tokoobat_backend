@@ -178,6 +178,7 @@ Class Produk extends REST_Controller{
         $response = $this->ProdukModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
+
     public function returnData($msg,$error){ 
         $response['error']=$error; 
         $response['message']=$msg; 
