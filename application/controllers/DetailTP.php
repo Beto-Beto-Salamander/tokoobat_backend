@@ -71,7 +71,7 @@ Class DetailTP extends REST_Controller{
         
     } 
 
-    public function delete_post($id = null){ 
+    public function index_delete($id = null){ 
 
         if($id == null){ 
             return $this->returnData('Id Parameter Not Found', true); 

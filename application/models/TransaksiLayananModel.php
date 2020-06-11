@@ -92,5 +92,49 @@ class TransaksiLayananModel extends CI_Model
         } 
         return ['msg'=>'Gagal hapus','error'=>true];
     }  
+
+    public function konfirmasiselesai($id_trans_layanan){ 
+        $this->db->select('c.telp_customer');
+        $this->db->from('transaksi_layanan as tl');
+        $this->db->join('detail_trans_layanan as dtl', 'tl.id_trans_layanan = dtl.id_trans_layanan');
+        $this->db->join('hewan as h', 'tl.id_hewan = h.id_hewan');
+        $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+        $this->db->where(array('tl.id_trans_layanan'=>$id_trans_layanan));
+        $query=$this->db->get();
+        $transaksi=$query->row();
+        $nomor="62".substr($transaksi->telp_customer, 1);
+
+        $this->db->select("hl.id_layanan, concat(l.nama_layanan, ' ', j.jenis, ' ', u.ukuran) as layanan");
+        $this->db->from('detail_trans_layanan as dtl');
+        $this->db->join('harga_layanan as hl', 'dtl.id_harga_layanan = hl.id_harga_layanan');
+        $this->db->join('layanan as l', 'hl.id_layanan = l.id_layanan');
+        $this->db->join('jenis_hewan as j', 'hl.id_jenis = j.id_jenis');
+        $this->db->join('ukuran_hewan as u', 'hl.id_ukuran = u.id_ukuran');
+        $this->db->where(array('dtl.id_trans_layanan'=>$id_trans_layanan));
+        $query=$this->db->get();
+        $detaillayanan=$query->result();
+
+        $updateData = [
+            'status_layanan' =>'Selesai'
+        ]; 
+
+        foreach ($detaillayanan as $row){
+            if($row->id_layanan == 1)
+            {
+                $basic  = new \Nexmo\Client\Credentials\Basic('0241ff8d', 'o5KN3ZEqeBjJG8bs');
+                $client = new \Nexmo\Client($basic);
+        
+                $message = $client->message()->send([
+                    'to' => $nomor,
+                    'from' => 'Kouvee',
+                    'text' => 'Pelanggan yang terhormat, layanan '.$row->layanan.' telah selesai. Silahkan lakukan pembayaran di kasir Kouvee PetShop'
+                ]);
+            } 
+        }
+        if($this->db->where('id_trans_layanan',$id_trans_layanan)->update($this->table, $updateData)){ 
+            return ['msg'=>'Konfirmasi Berhasil','error'=>false]; 
+        } 
+        return ['msg'=>'Konfirmasi gagal','error'=>true];
+    } 
 } 
 ?>

@@ -30,10 +30,9 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->from('transaksi_produk as tp');
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
-            $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
-            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
-            $this->db->join('customer as c', 'h.id_customer = c.id_customer');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan','left');
+            $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis','left');
+            $this->db->join('customer as c', 'h.id_customer = c.id_customer', 'left');
             $this->db->where(array('tp.transproduk_deleted_at'=>null, 'tp.status_penjualan_produk'=>'Belum Lunas'));
             $this->db->order_by('tp.transproduk_created_at','DESC');
             $this->db->group_by('tp.id_trans_produk');
@@ -48,8 +47,7 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->from('transaksi_produk as tp');
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
-            $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan', 'left');
             $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tp.id_trans_produk'=>$id,'tp.transproduk_deleted_at'=>null));
@@ -80,7 +78,7 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
             $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan', 'left');
             $this->db->join('jenis_hewan as j', 'h.id_jenis = j.id_jenis');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tp.transproduk_deleted_at'=>null, 'tp.status_penjualan_produk'=>'Lunas'));
@@ -98,7 +96,7 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
             $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan', 'left');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tp.id_trans_produk'=>$id,'tp.transproduk_deleted_at'=>null));
             $this->db->order_by('tp.tanggal_trans_produk','DESC');
@@ -127,7 +125,7 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
             $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan', 'left');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->order_by('tp.transproduk_created_at','DESC');
             $this->db->group_by('tp.id_trans_produk');
@@ -142,7 +140,7 @@ Class TransaksiProduk extends REST_Controller{
             $this->db->join('detail_trans_produk as dtp', 'tp.id_trans_produk = dtp.id_trans_produk');
             $this->db->join('pegawai as cs', 'tp.id_pegawai = cs.id_pegawai');
             $this->db->join('pegawai as kasir', 'tp.peg_id_pegawai = kasir.id_pegawai');
-            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan');
+            $this->db->join('hewan as h', 'tp.id_hewan = h.id_hewan', 'left');
             $this->db->join('customer as c', 'h.id_customer = c.id_customer');
             $this->db->where(array('tp.id_trans_produk'=>$id));
             $this->db->order_by('tp.tanggal_trans_produk','DESC');
