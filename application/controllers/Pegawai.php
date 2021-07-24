@@ -1,5 +1,5 @@
 <?php
-use Restserver \Libraries\REST_Controller ; 
+use Restserver\Libraries\REST_Controller ; 
 
 Class Pegawai extends REST_Controller{
 
@@ -76,8 +76,8 @@ Class Pegawai extends REST_Controller{
                     'rules' => 'required' 
                 ],
                 [ 
-                    'field' => 'tgllahir_pegawai', 
-                    'label' => 'tgllahir_pegawai', 
+                    'field' => 'tgl_lahir_pegawai', 
+                    'label' => 'tgl_lahir_pegawai', 
                     'rules' => 'required' 
                 ],
                 [ 
@@ -112,7 +112,7 @@ Class Pegawai extends REST_Controller{
             $pegawai = new PegawaiData(); 
             $pegawai->nama_pegawai = $this->post('nama_pegawai'); 
             $pegawai->alamat_pegawai  = $this->post('alamat_pegawai'); 
-            $pegawai->tgllahir_pegawai = $this->post('tgllahir_pegawai');
+            $pegawai->tgl_lahir_pegawai = $this->post('tgl_lahir_pegawai');
             $pegawai->telp_pegawai = $this->post('telp_pegawai');
             $pegawai->role_pegawai  = $this->post('role_pegawai'); 
             $pegawai->username = $this->post('username');
@@ -124,7 +124,7 @@ Class Pegawai extends REST_Controller{
             $pegawai = new PegawaiData(); 
             $pegawai->nama_pegawai = $this->post('nama_pegawai'); 
             $pegawai->alamat_pegawai  = $this->post('alamat_pegawai'); 
-            $pegawai->tgllahir_pegawai = $this->post('tgllahir_pegawai');
+            $pegawai->tgl_lahir_pegawai = $this->post('tgl_lahir_pegawai');
             $pegawai->telp_pegawai = $this->post('telp_pegawai');  
             $pegawai->role_pegawai  = $this->post('role_pegawai'); 
             $pegawai->username = $this->post('username');
@@ -194,7 +194,7 @@ Class Pegawai extends REST_Controller{
 Class PegawaiData{ 
     public $nama_pegawai; 
     public $alamat_pegawai; 
-    public $tgllahir_pegawai;
+    public $tgl_lahir_pegawai;
     public $telp_pegawai;
     public $role_pegawai; 
     public $username;

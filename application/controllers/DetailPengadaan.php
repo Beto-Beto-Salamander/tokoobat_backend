@@ -1,5 +1,5 @@
 <?php
-use Restserver \Libraries\REST_Controller ; 
+use Restserver\Libraries\REST_Controller ; 
 
 Class DetailPengadaan extends REST_Controller{
 
@@ -13,13 +13,14 @@ Class DetailPengadaan extends REST_Controller{
         $this->load->library('form_validation'); $this->load->helper(['jwt','authorization']);
     } 
 
-    public function index_get($id){ 
+    public function index_get($id=null){ 
         // $data = $this->verify_request();
         $status = parent::HTTP_OK;
         // if($data['status'] == 401){
         //     return $this->returnData($data['msg'], true);
         // }
-        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, pro.harga_beli_produk, dp.jml_pengadaan_produk, dp.satuan, dp.subtotal_pengadaan');
+        $this->db->select('dp.id_detail_pengadaan, dp.id_pengadaan, dp.id_produk, pro.nama_produk, pro.harga_beli_produk,
+         dp.jml_pengadaan_produk, dp.satuan, dp.subtotal_pengadaan');
         $this->db->from('detail_pengadaan as dp');
         $this->db->join('produk as pro', 'dp.id_produk = pro.id_produk');
         $this->db->where(array('dp.id_pengadaan'=>$id));

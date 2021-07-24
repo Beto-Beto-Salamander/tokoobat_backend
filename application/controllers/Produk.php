@@ -1,5 +1,5 @@
 <?php
-use Restserver \Libraries\REST_Controller ; 
+use Restserver\Libraries\REST_Controller ; 
 
 Class Produk extends REST_Controller{
 
@@ -93,11 +93,6 @@ Class Produk extends REST_Controller{
                     'label' => 'nama_produk', 
                     'rules' => 'required|callback_is_unique_produk' 
                 ], 
-                // [ 
-                //     'field' => 'foto_produk', 
-                //     'label' => 'foto_produk', 
-                //     'rules' => 'required' 
-                // ],
                 [ 
                     'field' => 'harga_beli_produk', 
                     'label' => 'harga_beli_produk', 
@@ -169,6 +164,14 @@ Class Produk extends REST_Controller{
         return $this->response(['message'=>$response['msg'], 'error'=>$response['error']]);
     }
 
+    public function transaksiproduk_post($id){
+        $produk = new ProdukData(); 
+        $produk->stok = $this->post('stok'); 
+
+        $response = $this->ProdukModel->transaksiproduk($produk,$id); 
+        // return $this->returnData($response['msg'], $response['error']);
+        return $this->response(['message'=>$response['msg'], 'error'=>$response['error']]);
+    }
     public function delete_post($id = null){ 
         $produk = new ProdukData(); 
 

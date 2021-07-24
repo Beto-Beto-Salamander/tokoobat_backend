@@ -53,8 +53,8 @@ Class SuratPengadaan extends CI_Controller{
         $id_p = sprintf("%02d", $id_pengadaan);
         $newDate = date("Y-m-d", strtotime($tgl));
         // setting jenis font yang akan digunakan
-        $pdf->Image(APPPATH.'controllers/PDF/Logo/logo.jpg',20,10,-300);
-        $pdf->Image(APPPATH.'controllers/PDF/Logo/kouveelogo.png',20,25,-800);
+        $pdf->Image(APPPATH.'controllers/PDF/Logo/logoToko.jpg',20,10,-300);
+        $pdf->Image(APPPATH.'controllers/PDF/Logo/logoObat.jpg',25,10,-900);
         $pdf->Cell(10,50,'',0,1);
         $pdf->Image(APPPATH.'controllers/PDF/Logo/kotak.jpg',5,80,-700);
         // Memberikan space kebawah agar tidak terlalu rapat
@@ -78,9 +78,10 @@ Class SuratPengadaan extends CI_Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(10,10,'',0,1);
         $pdf->Cell(10,6,'NO',1,0,'C');
-        $pdf->Cell(50,6,'NAMA PRODUK',1,0,'C');
-        $pdf->Cell(50,6,'SATUAN',1,0,'C');
-        $pdf->Cell(50,6,'JUMLAH',1,1,'C');
+        $pdf->Cell(40,6,'NAMA PRODUK',1,0,'C');
+        $pdf->Cell(40,6,'SATUAN',1,0,'C');
+        $pdf->Cell(40,6,'JUMLAH',1,0,'C');
+        $pdf->Cell(40,6,'HARGA',1,1,'C');
         $pdf->SetFont('Arial','',10);
         $i = 1;
         foreach ($detailpengadaan as $row){
@@ -91,12 +92,27 @@ Class SuratPengadaan extends CI_Controller{
                     if($loop->id_produk == $row->id_produk)
                     {
                         $i++;
-                        $pdf->Cell(50,10,$loop->nama_produk,1,0,'L');
-                        $pdf->Cell(50,10,$row->satuan,1,0,'L');
-                        $pdf->Cell(50,10,$row->jml_pengadaan_produk,1,1,'C');
+                        $pdf->Cell(40,10,$loop->nama_produk,1,0,'C');
+                        $pdf->Cell(40,10,$row->satuan,1,0,'C');
+                        $pdf->Cell(40,10,$row->jml_pengadaan_produk,1,0,'C');
+                        $pdf->Cell(40,10,$row->subtotal_pengadaan,1,1,'C');
+                        
                     } 
+                    
                 }
-            } 
+                
+            }
+           
+        }
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(130,10,' TOTAL HARGA: ',1,0,'L'); 
+        $pdf->SetFont('Arial','',10);
+        foreach ($pengadaan as $row){
+            if($row->id_pengadaan == $param)
+            {
+                $pdf->Cell(40,10,$row->total_pengadaan,1,1,'C');
+            }
+           
         }
         date_default_timezone_set('Asia/Jakarta');
         $now = date("d-m-Y");

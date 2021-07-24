@@ -128,6 +128,17 @@ class ProdukModel extends CI_Model
         return ['msg'=>'Gagal edit','error'=>true]; 
     }
 
+    public function transaksiproduk($request,$id){
+        $this->stok = $request->stok;
+        $this->db->set('stok', 'stok-'.$this->stok, FALSE);
+        $this->db->where('id_produk', $id);
+        
+        if($this->db->update($this->table)){ 
+            return ['msg'=>'Berhasil edit','error'=>false]; 
+        } 
+        return ['msg'=>'Gagal edit','error'=>true]; 
+    }
+
     public function destroy($id_produk){ 
         $getProduk=$this->db->select('*')->where(array('id_produk' => $id_produk))->get($this->table)->row();
         if (empty($getProduk)) 
@@ -174,62 +185,62 @@ class ProdukModel extends CI_Model
         }
     }
 
-    public function sendNotif($title, $message){ 
-        //creating a new push
-        $push = null; 
-        // //first check if the push has an image with it
-        // if($this->post('image')){
-        //     $push = new Push(
-        //         $this->post('title'),
-        //         $this->post('message'),
-        //         $this->post('image')
-        //     );
-        // }else{
-        //     //if the push don't have an image give null in place of image
-        //     $push = new Push(
-        //         $this->post('title'),
-        //         $this->post('message'),
-        //         null
-        //     );
-        // }
-        $push = new Push($title,$message,null); 
+    // public function sendNotif($title, $message){ 
+    //     //creating a new push
+    //     $push = null; 
+    //     // //first check if the push has an image with it
+    //     // if($this->post('image')){
+    //     //     $push = new Push(
+    //     //         $this->post('title'),
+    //     //         $this->post('message'),
+    //     //         $this->post('image')
+    //     //     );
+    //     // }else{
+    //     //     //if the push don't have an image give null in place of image
+    //     //     $push = new Push(
+    //     //         $this->post('title'),
+    //     //         $this->post('message'),
+    //     //         null
+    //     //     );
+    //     // }
+    //     $push = new Push($title,$message,null); 
 
-        //getting the push from push object
-        $mPushNotification = $push->getPush(); 
+    //     //getting the push from push object
+    //     $mPushNotification = $push->getPush(); 
 
-        //getting the token from database object 
-        // $devicetoken = $db->getAllTokens();
-        $devicetoken = $this->getTokenAdmin();
+    //     //getting the token from database object 
+    //     // $devicetoken = $db->getAllTokens();
+    //     $devicetoken = $this->getTokenAdmin();
 
-        //creating firebase class object 
-        $firebase = new Firebase(); 
+    //     //creating firebase class object 
+    //     $firebase = new Firebase(); 
 
-        //sending push notification and displaying result 
-        return $firebase->send($devicetoken, $mPushNotification);
-    } 
+    //     //sending push notification and displaying result 
+    //     return $firebase->send($devicetoken, $mPushNotification);
+    // } 
 
-    public function sendEmail($produk, $jumlah){
-        $mail = new PHPMailer\PHPMailer\PHPMailer();
-        $mail-> IsSMTP();
-        $mail-> SMTPSecure = 'tsl';
-        $mail-> Host = 'smtp.gmail.com';
-        $mail-> SMTPAuth = true;
-        $mail-> Username = "petshopkouvee12345@gmail.com";
-        $mail-> Password = "admin12345!";
-        $mail-> Port = 587;
+    // public function sendEmail($produk, $jumlah){
+    //     $mail = new PHPMailer\PHPMailer\PHPMailer();
+    //     $mail-> IsSMTP();
+    //     $mail-> SMTPSecure = 'tsl';
+    //     $mail-> Host = 'smtp.gmail.com';
+    //     $mail-> SMTPAuth = true;
+    //     $mail-> Username = "petshopkouvee12345@gmail.com";
+    //     $mail-> Password = "admin12345!";
+    //     $mail-> Port = 587;
 
-        $mail-> setFrom('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
-        $mail-> addAddress('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
-        $mail-> Subject = "[PERINGATAN PRODUK HAMPIR HABIS]";
-        $mail->isHTML(true);
-        $mail->Body = 'Produk '.$produk.' tersisa '.$jumlah.' buah. Harap segera melakukan pengadaan!';
+    //     $mail-> setFrom('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
+    //     $mail-> addAddress('petshopkouvee12345@gmail.com', 'Kouvee Petshop');
+    //     $mail-> Subject = "[PERINGATAN PRODUK HAMPIR HABIS]";
+    //     $mail->isHTML(true);
+    //     $mail->Body = 'Produk '.$produk.' tersisa '.$jumlah.' buah. Harap segera melakukan pengadaan!';
 
-        if($mail->send()){
-            return "Berhasil kirim email";
-        } else {
-            return $mail->ErrorInfo;
-        }
-    }
+    //     if($mail->send()){
+    //         return "Berhasil kirim email";
+    //     } else {
+    //         return $mail->ErrorInfo;
+    //     }
+    // }
 
     public function getTokenAdmin(){
         $this->db->select('token');

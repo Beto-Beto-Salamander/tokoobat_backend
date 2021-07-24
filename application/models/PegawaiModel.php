@@ -6,7 +6,7 @@ class PegawaiModel extends CI_Model
     public $id_pegawai; 
     public $nama_pegawai; 
     public $alamat_pegawai; 
-    public $tgllahir_pegawai; 
+    public $tgl_lahir_pegawai; 
     public $telp_pegawai; 
     public $rule = [ 
         [ 
@@ -20,8 +20,8 @@ class PegawaiModel extends CI_Model
             'rules' => 'required' 
         ], 
         [ 
-            'field' => 'tgllahir_pegawai', 
-            'label' => 'tgllahir_pegawai', 
+            'field' => 'tgl_lahir_pegawai', 
+            'label' => 'tgl_lahir_pegawai', 
             'rules' => 'required' 
         ], 
         [ 
@@ -50,12 +50,13 @@ class PegawaiModel extends CI_Model
     public function store($request) { 
         $this->nama_pegawai = $request->nama_pegawai; 
         $this->alamat_pegawai = $request->alamat_pegawai;
-        $this->tgllahir_pegawai = $request->tgllahir_pegawai; 
+        $this->tgl_lahir_pegawai = $request->tgl_lahir_pegawai; 
         $this->telp_pegawai = $request->telp_pegawai;
         $this->role_pegawai = $request->role_pegawai;
         $this->username = $request->username; 
         // $this->password = password_hash($request->password, PASSWORD_BCRYPT);
-        $this->password = md5($request->password);
+        //$this->password = md5($request->password);
+        $this->password = $request->password;
 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil tambah','error'=>false];
@@ -68,11 +69,12 @@ class PegawaiModel extends CI_Model
         $updateData = [
             'nama_pegawai' =>$request->nama_pegawai,
             'alamat_pegawai' =>$request->alamat_pegawai,
-            'tgllahir_pegawai' =>$request->tgllahir_pegawai,
+            'tgl_lahir_pegawai' =>$request->tgl_lahir_pegawai,
             'telp_pegawai' =>$request->telp_pegawai,
             'role_pegawai' =>$request->role_pegawai,
             'username' =>$request->username,
-            'password' =>password_hash($request->password, PASSWORD_BCRYPT),
+            //'password' =>password_hash($request->password, PASSWORD_BCRYPT),
+            'password' =>$request->password,
             'peg_edited_at' =>$now
         ]; 
         if($this->db->where('id_pegawai',$id_pegawai)->update($this->table, $updateData)){ 
@@ -96,10 +98,10 @@ class PegawaiModel extends CI_Model
     }     
 
     public function verify($request){
-        $pegawai = $this->db->select('*')->where(array('username' => $request->username,'password' => md5($request->password)))->get($this->table)->row_array();
+        $pegawai = $this->db->select('*')->where(array('username' => $request->username,'password' => $request->password))->get($this->table)->row_array();
         // if(!empty($pegawai) && password_verify($request->password , $pegawai['password'])) {
         if(!empty($this->db->select('*')->where(array('username' => $request->username))->get($this->table)->row_array())){
-            if(!empty($this->db->select('*')->where(array('username' => $request->username,'password' => md5($request->password)))->get($this->table)->row_array())){
+            if(!empty($this->db->select('*')->where(array('username' => $request->username,'password' => $request->password))->get($this->table)->row_array())){
                 return ['msg'=>$pegawai,'error'=>false];
             }else{
                 return ['msg'=>'Password salah','error'=>true];
